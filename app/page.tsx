@@ -16,7 +16,6 @@ export default function Page() {
 
   return (
     <>
-      <h1 className="font-serif text-4xl underline">Movies</h1>
       <SearchForm getMovies={getMovies} title={title} type={type} />
       <MoviesContainer movies={movies} />
     </>
