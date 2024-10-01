@@ -1,10 +1,15 @@
+import {
+  MOVIE_SEARCH_BY_DEFAULT,
+  PAGE_BY_DEFAULT,
+  TYPE_BY_DEFAULT,
+} from "@/config/initial";
 import { MovieRepository } from "@/core/movies/domain/contract/MovieRepository";
-import { MovieList } from "@/core/movies/domain/Movie";
+import { MovieList, TypeMovie } from "@/core/movies/domain/Movie";
 import { createContext, useContext, useEffect, useState } from "react";
 
 export interface MoviesContextState {
   movies: MovieList;
-  getMovies: (title: string, type: string, page: number) => Promise<void>;
+  getMovies: (title: string, type: TypeMovie, page: number) => Promise<void>;
   currentPage: number;
   currentTitle: string;
   currentType: string;
@@ -22,11 +27,11 @@ export const MoviesContextProvider = ({
   service,
 }: React.PropsWithChildren<{ service: MovieRepository }>) => {
   const [movies, setMovies] = useState<MovieList>(initialMovieList);
-  const [title, setTitle] = useState<string>("");
-  const [type, setType] = useState<string>("");
-  const [page, setPage] = useState<number>(1);
+  const [title, setTitle] = useState<string>(MOVIE_SEARCH_BY_DEFAULT);
+  const [type, setType] = useState<TypeMovie>(TYPE_BY_DEFAULT);
+  const [page, setPage] = useState<number>(PAGE_BY_DEFAULT);
 
-  async function getMovies(title: string, type: string, page: number) {
+  async function getMovies(title: string, type: TypeMovie, page: number) {
     const movies = await service.getMovies({ title, type, page });
     setMovies(movies);
     setTitle(title);
@@ -35,7 +40,7 @@ export const MoviesContextProvider = ({
   }
 
   useEffect(() => {
-    getMovies("batman", "movie", 1);
+    getMovies(title, type, page);
   }, []);
 
   return (

@@ -6,7 +6,7 @@ export type Movie = {
   Poster: string | null;
 };
 
-export type TypeMovie = "movie" | "series";
+export type TypeMovie = "movie" | "series" | "all";
 
 export type MovieList = {
   Movies: Movie[];

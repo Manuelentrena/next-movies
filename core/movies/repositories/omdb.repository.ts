@@ -16,7 +16,9 @@ import {
 export const createRepositoryMoviesOMDB = (): MovieRepository => {
   return {
     getMovies: async ({ title, type, page }: GetMovies) => {
-      const url = `${BASE_URL}${API_KEY}&s=${title}&type=${type}&page=${page}`;
+      const url = `${BASE_URL}${API_KEY}&s=${title}&page=${page}${
+        type !== "all" ? `&type=${type}` : ""
+      }`;
       const res = await fetch(url);
       const data = (await res.json()) as MoviesListOMBD;
 
