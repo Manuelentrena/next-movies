@@ -2,16 +2,22 @@
 
 import { MoviesContainer } from "@/app/_components";
 import { SearchForm } from "@/components/global/SearchForm";
-import { useMovies } from "@/store/Movies.context";
+import { MOVIE_SEARCH_BY_DEFAULT } from "@/config/initial";
+import { TypesMovie } from "@/core/movies/domain/Movie";
+import { useMovies } from "@/hooks/useMovies";
+import { useSearchParams } from "next/navigation";
 
 export default function Page() {
-  const { movies, getMovies, total } = useMovies();
-  console.log({ movies });
-  console.log({ total });
+  const searchParams = useSearchParams();
+  const title = searchParams.get("title") ?? MOVIE_SEARCH_BY_DEFAULT;
+  const type = (searchParams.get("type") as TypesMovie) ?? TypesMovie.ALL;
+  console.log({ title, type });
+  const { movies, getMovies } = useMovies({ title, type });
+
   return (
     <>
       <h1 className="font-serif text-4xl underline">Movies</h1>
-      <SearchForm getMovies={getMovies} />
+      <SearchForm getMovies={getMovies} title={title} type={type} />
       <MoviesContainer movies={movies} />
     </>
   );

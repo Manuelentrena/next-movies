@@ -8,8 +8,8 @@ export type Movie = {
 
 export enum TypesMovie {
   ALL = "all",
-  MOVIE = "Movie",
-  SERIES = "Series",
+  MOVIE = "movie",
+  SERIES = "series",
 }
 
 export type MovieList = {

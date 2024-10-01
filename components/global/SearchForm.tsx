@@ -11,10 +11,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { MOVIE_SEARCH_BY_DEFAULT } from "@/config/initial";
 import { GetMovies } from "@/core/movies/domain/contract/MovieRepository";
 import { TypesMovie } from "@/core/movies/domain/Movie";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
@@ -30,19 +30,23 @@ const formSchema = z.object({
 
 interface SearchProps {
   getMovies: (values: GetMovies) => void;
+  title: string;
+  type: TypesMovie;
 }
 
-export function SearchForm({ getMovies }: SearchProps) {
+export function SearchForm({ getMovies, title, type }: SearchProps) {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: MOVIE_SEARCH_BY_DEFAULT,
-      type: TypesMovie.ALL,
+      title: title,
+      type: type,
     },
   });
 
   const onSubmit = ({ title, type }: z.infer<typeof formSchema>) => {
     getMovies({ title: title, type: type, page: 1 });
+    router.push(`?title=${title}&type=${type}`);
   };
 
   return (
@@ -76,7 +80,7 @@ export function SearchForm({ getMovies }: SearchProps) {
                       <SelectLabel>Types</SelectLabel>
                       {Object.values(TypesMovie).map((type) => (
                         <SelectItem key={type} value={type}>
-                          {type}
+                          {type.toLocaleUpperCase()}
                         </SelectItem>
                       ))}
                     </SelectGroup>
