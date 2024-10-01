@@ -14,6 +14,7 @@ import {
 import { GetMovies } from "@/core/movies/domain/contract/MovieRepository";
 import { TypesMovie } from "@/core/movies/domain/Movie";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -51,14 +52,14 @@ export function SearchForm({ getMovies, title, type }: SearchProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="my-10 flex items-center justify-center space-x-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="bg-slate-500 mb-6 md:flex items-center justify-center md:space-x-4 p-2 md:p-6">
         <FormField
           control={form.control}
           name="title"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="title" {...field} />
+                <Input placeholder="title" {...field} className="mb-2 md:mb-0" />
               </FormControl>
 
               <FormMessage />
@@ -72,7 +73,7 @@ export function SearchForm({ getMovies, title, type }: SearchProps) {
             <FormItem>
               <FormControl>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger className="w-[180px]">
+                  <SelectTrigger className="md:w-[180px] w-full mb-2 md:mb-0">
                     <SelectValue placeholder="Select a type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -91,9 +92,9 @@ export function SearchForm({ getMovies, title, type }: SearchProps) {
             </FormItem>
           )}
         />
-
-        <Button type="submit" className="flex justify-end">
-          Buscar
+        <Button type="submit" size="icon" className="w-full md:w-10 md:h-10">
+          <Search className="h-4 w-4" />
+          <span className="sr-only">Buscar películas</span>
         </Button>
       </form>
     </Form>
