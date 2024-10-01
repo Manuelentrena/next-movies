@@ -1,35 +1,32 @@
-# Next.js + Jest
+# Aplicación de Búsqueda de Películas y Series
 
-This example shows how to configure Jest to work with Next.js.
+## Descripción
 
-This includes Next.js' built-in support for Global CSS, CSS Modules and TypeScript. This example also shows how to use Jest with the App Router and React Server Components.
+Esta aplicación permite a los usuarios buscar películas y series a través de la interfaz del repositorio, visualizar los resultados, ver detalles de cada película o serie y guardar una lista de favoritas. Los favoritos se gestionan y persisten utilizando **Global State**, lo que garantiza que se mantengan al recargar la página.
 
-> **Note:** Since tests can be co-located alongside other files inside the App Router, we have placed those tests in `app/` to demonstrate this behavior (which is different than `pages/`). You can still place all tests in `__tests__` if you prefer.
+## Funcionalidades
 
-## Deploy your own
+- **Búsqueda**: Input de búsqueda siempre visible para realizar consultas de películas y series.
+- **Mostrar resultados**: Los resultados de la búsqueda se muestran en una lista con el póster y el título de la película o serie.
+- **Detalle de películas**: Al hacer clic en el póster de una película o serie, se redirige a una página con más detalles.
+- **Favoritos**: Permitir agregar o quitar películas y series a una lista de favoritos, que se muestra claramente en la UI.
+- **Filtrar por tipo**: Opción para filtrar la lista por películas o series.
+- **Sincronización del estado**: Mostrar el contador del número de películas/series de la lista de favoritos.
+- **Persistencia**: Los datos de la lista de favoritos se guardan y se mantienen al recargar la página.
+- **Estilo**: Estilos personalizados.
+- **Tipado**: Datos están tipadas usando **TypeScript**.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-jest&project-name=with-jest&repository-name=with-jest)
+## Tecnologías Utilizadas
 
-## How to Use
+- **Next 14**
+- **Redux Toolkit**
+- **OMDb API**
+- **TypeScript**
+- **Fetch**
 
-Quickly get started using [Create Next App](https://github.com/vercel/next.js/tree/canary/packages/create-next-app#readme)!
+## Instalación
 
-In your terminal, run the following command:
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/Manuelentrena/next-movies.git
 
-```bash
-npx create-next-app --example with-jest with-jest-app
-```
-
-```bash
-yarn create next-app --example with-jest with-jest-app
-```
-
-```bash
-pnpm create next-app --example with-jest with-jest-app
-```
-
-## Running Tests
-
-```bash
-npm test
-```
