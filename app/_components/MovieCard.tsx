@@ -31,7 +31,7 @@ const MovieCard: React.FC<MovieCardProps> = memo(({ Title, Year, Type, Poster, h
       {/* Image */}
       {Poster ? (
         <img src={Poster} alt={`${Title} Poster`} className="absolute inset-0 h-full w-full object-cover" />
-      ) : null}
+      ) : <img src="poster_not_found.webp" alt={`${Title} Poster`} className="absolute inset-0 h-full w-full object-cover" />}
 
       {/* Star */}
       <div className="absolute right-2 top-2 z-10 cursor-pointer" onClick={handleStarClick}>

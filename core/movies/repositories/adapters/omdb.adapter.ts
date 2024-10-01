@@ -1,4 +1,4 @@
-import { MovieDetail, MovieList, TypeMovie } from "@/core/movies/domain/Movie";
+import { MovieDetail, MovieList, TypesMovie } from "@/core/movies/domain/Movie";
 import { MovieDetailOMBD, MoviesListOMBD } from "@/core/movies/repositories/types/omdb.types";
 
 export function adapterMoviesListOMDB(movies: MoviesListOMBD) {
@@ -7,8 +7,8 @@ export function adapterMoviesListOMDB(movies: MoviesListOMBD) {
       Title: movie.Title,
       Year: movie.Year,
       Id: movie.imdbID,
-      Type: movie.Type as TypeMovie,
-      Poster: movie.Poster || null,
+      Type: movie.Type as TypesMovie,
+      Poster: movie.Poster !== "N/A" ? movie.Poster : null,
     })),
     Total: movies.totalResults,
   } as MovieList;
@@ -19,7 +19,7 @@ export function adapterMovieDetailOMDB(movie: MovieDetailOMBD) {
     Id: movie.imdbID,
     Title: movie.Title,
     Year: movie.Year,
-    Type: movie.Type as TypeMovie,
+    Type: movie.Type as TypesMovie,
     Poster: movie.Poster,
     Rated: movie.Rated,
     Released: movie.Released,
