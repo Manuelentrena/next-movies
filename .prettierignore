@@ -1,0 +1,18 @@
+# Ignorar directorios
+node_modules/
+build/
+dist/
+coverage/
+
+# Ignorar archivos específicos
+package-lock.json
+yarn.lock
+
+# Ignorar archivos con ciertos patrones
+*.min.js
+*.map
+*.log
+
+# Ignorar carpetas específicas dentro de cualquier parte del proyecto
+**/vendor/**
+**/tmp/**
