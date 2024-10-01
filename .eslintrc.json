@@ -20,7 +20,8 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "react/prop-types": "off",
-    "@typescript-eslint/no-empty-object-type": "off"
+    "@typescript-eslint/no-empty-object-type": "off",
+    "react-hooks/exhaustive-deps": "off"
     // "react/react-in-jsx-scope": "off"
     // "@typescript-eslint/no-floating-promises": "off",
     // "@typescript-eslint/explicit-function-return-type": "off",

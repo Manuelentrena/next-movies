@@ -1,8 +1,8 @@
-import { MovieDetail, MovieList, TypeMovie } from "@/core/movies/domain/Movie";
+import { MovieDetail, MovieList, TypesMovie } from "@/core/movies/domain/Movie";
 
 export interface GetMovies {
   title: string;
-  type: TypeMovie;
+  type: TypesMovie;
   page: number;
 }
 

@@ -23,7 +23,8 @@
       "@/styles/*": ["styles/*"],
       "@/core/*": ["core/*"],
       "@/config/*": ["config/*"],
-      "@/utils/*": ["utils/*"]
+      "@/utils/*": ["utils/*"],
+      "@/store/*": ["store/*"]
     },
     "plugins": [
       {

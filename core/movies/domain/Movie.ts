@@ -2,11 +2,15 @@ export type Movie = {
   Title: string;
   Year: string;
   Id: string;
-  Type: TypeMovie;
+  Type: TypesMovie;
   Poster: string | null;
 };
 
-export type TypeMovie = "movie" | "series" | "all";
+export enum TypesMovie {
+  ALL = "all",
+  MOVIE = "Movie",
+  SERIES = "Series",
+}
 
 export type MovieList = {
   Movies: Movie[];
@@ -17,7 +21,7 @@ export type MovieDetail = {
   Id: string;
   Title: string;
   Year: string;
-  Type: TypeMovie;
+  Type: TypesMovie;
   Poster: string | null;
   Rated: string;
   Released: string;
