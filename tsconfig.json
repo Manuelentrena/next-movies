@@ -19,7 +19,9 @@
     "paths": {
       "@/components/*": ["components/*"],
       "@/pages/*": ["pages/*"],
-      "@/styles/*": ["styles/*"]
+      "@/styles/*": ["styles/*"],
+      "@/core/*": ["core/*"],
+      "@/config/*": ["config/*"]
     },
     "plugins": [
       {
