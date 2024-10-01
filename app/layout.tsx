@@ -4,6 +4,8 @@ import { createRepositoryMoviesOMDB } from "@/core/movies/repositories/omdb.repo
 import { createServiceMovies } from "@/core/movies/services/Movie.services";
 import { MoviesContextProvider } from "store/Movies.context";
 
+import "@/styles/global.css";
+
 const repositoryMoviesOMDB = createRepositoryMoviesOMDB();
 const serviceMoviesOMDB = createServiceMovies(repositoryMoviesOMDB);
 
