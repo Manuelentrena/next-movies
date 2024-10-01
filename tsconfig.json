@@ -19,7 +19,7 @@
     "paths": {
       "@/*": ["./*"],
       "@/components/*": ["components/*"],
-      "@/pages/*": ["pages/*"],
+      "@/app/*": ["app/*"],
       "@/styles/*": ["styles/*"],
       "@/core/*": ["core/*"],
       "@/config/*": ["config/*"],
@@ -32,6 +32,6 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types.d.ts", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types.d.ts", ".next/types/**/*.ts", "next.config.js"],
   "exclude": ["node_modules"]
 }
