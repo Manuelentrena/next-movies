@@ -29,4 +29,4 @@ Esta aplicación permite a los usuarios buscar películas y series a través de 
 1. Clonar el repositorio:
    ```bash
    git clone https://github.com/Manuelentrena/next-movies.git
-
+   ```

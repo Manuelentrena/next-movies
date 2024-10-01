@@ -7,7 +7,7 @@ export default function Page() {
   console.log({ movies });
   return (
     <>
-      <h1 className="text-4xl font-serif underline">Movies</h1>
+      <h1 className="font-serif text-4xl underline">Movies</h1>
     </>
   );
 }

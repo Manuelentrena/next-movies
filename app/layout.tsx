@@ -9,11 +9,7 @@ import "@/styles/global.css";
 const repositoryMoviesOMDB = createRepositoryMoviesOMDB();
 const serviceMoviesOMDB = createServiceMovies(repositoryMoviesOMDB);
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <MoviesContextProvider service={serviceMoviesOMDB}>
       <html lang="en">
