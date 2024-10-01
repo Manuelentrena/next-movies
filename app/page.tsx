@@ -21,9 +21,12 @@ export default function Page() {
     externalRef: observerRef,
   });
 
-  useEffect(function () {
-    if (isObserver) getMoviesNextPage()
-  }, [isObserver])
+  useEffect(
+    function () {
+      if (isObserver) getMoviesNextPage();
+    },
+    [isObserver],
+  );
 
   return (
     <>

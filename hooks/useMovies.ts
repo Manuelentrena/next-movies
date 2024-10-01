@@ -6,7 +6,19 @@ import { MoviesContext } from "@/store/movies.context";
 import { useCallback, useContext, useEffect, useRef } from "react";
 
 export const useMovies = ({ title, type }: { title: string; type: TypesMovie }) => {
-  const { movies, currentTotal, currentPage, currentTitle, currentType, service, setPage, setTitle, setTotal, setType, setMovies } = useContext(MoviesContext);
+  const {
+    movies,
+    currentTotal,
+    currentPage,
+    currentTitle,
+    currentType,
+    service,
+    setPage,
+    setTitle,
+    setTotal,
+    setType,
+    setMovies,
+  } = useContext(MoviesContext);
 
   const hasFetchedMovies = useRef(false);
 
@@ -29,15 +41,12 @@ export const useMovies = ({ title, type }: { title: string; type: TypesMovie }) 
     [service, currentTitle, currentType],
   );
 
-  const getMoviesNextPage = useCallback(
-    async () => {
-      const moviesList = await service.getMovies({ title: currentTitle, type: currentType , page: currentPage + 1 });
-      setMovies((prevMovies) => prevMovies.concat(moviesList.Movies));
-      setTotal(Number(moviesList.Total));
-      setPage((prev) => prev + 1);
-    },
-    [service, currentPage, currentTitle, currentType],
-  );
+  const getMoviesNextPage = useCallback(async () => {
+    const moviesList = await service.getMovies({ title: currentTitle, type: currentType, page: currentPage + 1 });
+    setMovies((prevMovies) => prevMovies.concat(moviesList.Movies));
+    setTotal(Number(moviesList.Total));
+    setPage((prev) => prev + 1);
+  }, [service, currentPage, currentTitle, currentType]);
 
   return {
     getMovies,
