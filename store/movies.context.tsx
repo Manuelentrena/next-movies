@@ -1,8 +1,8 @@
 import { MOVIE_SEARCH_BY_DEFAULT, PAGE_BY_DEFAULT, TYPE_BY_DEFAULT } from "@/config/initial";
-import { GetMovies, MovieRepository } from "@/core/movies/domain/contract/MovieRepository";
+import { MovieRepository } from "@/core/movies/domain/contract/MovieRepository";
 import { Movie, TypesMovie } from "@/core/movies/domain/Movie";
 import { MoviesContextState } from "@/store/movies.interface";
-import { createContext, useCallback, useState } from "react";
+import { createContext, useState } from "react";
 
 export const MoviesContext = createContext({} as MoviesContextState);
 
@@ -13,23 +13,12 @@ export const MoviesContextProvider = ({ children, service }: React.PropsWithChil
   const [type, setType] = useState<TypesMovie>(TYPE_BY_DEFAULT);
   const [page, setPage] = useState<number>(PAGE_BY_DEFAULT);
 
-  const getMovies = useCallback(
-    async ({ title, type, page }: GetMovies) => {
-      const moviesList = await service.getMovies({ title, type, page });
-      setMovies(moviesList.Movies);
-      setTotal(Number(moviesList.Total));
-      setTitle(title);
-      setType(type);
-      setPage(page);
-    },
-    [service],
-  );
-
   return (
     <MoviesContext.Provider
       value={{
+        service,
         movies,
-        getMovies,
+        setMovies,
         currentTotal: total,
         setTotal,
         currentPage: page,

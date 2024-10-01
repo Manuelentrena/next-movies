@@ -7,21 +7,23 @@ import { TypesMovie } from "@/core/movies/domain/Movie";
 import { useMovies } from "@/hooks/useMovies";
 import useObserver from "@/hooks/useObserver";
 import { useSearchParams } from "next/navigation";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export default function Page() {
   const searchParams = useSearchParams();
   const title = searchParams.get("title") ?? MOVIE_SEARCH_BY_DEFAULT;
   const type = (searchParams.get("type") as TypesMovie) ?? TypesMovie.ALL;
 
-  const { movies, getMovies } = useMovies({ title, type });
+  const { movies, getMovies, getMoviesNextPage } = useMovies({ title, type });
 
   const observerRef = useRef(null);
   const { isObserver } = useObserver({
     externalRef: observerRef,
   });
 
-  console.log({ isObserver });
+  useEffect(function () {
+    if (isObserver) getMoviesNextPage()
+  }, [isObserver])
 
   return (
     <>
