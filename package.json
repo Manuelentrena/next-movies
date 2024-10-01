@@ -10,9 +10,11 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@radix-ui/react-slot": "1.1.0",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.1",
     "eslint-config-next": "14.2.13",
+    "lucide-react": "0.446.0",
     "next": "latest",
     "react": "18.3.1",
     "react-dom": "18.3.1",
@@ -27,7 +29,7 @@
     "@types/jest": "29.5.13",
     "@types/react": "18.3.10",
     "autoprefixer": "10.4.20",
-    "eslint": "9.11.1",
+    "eslint": "8.57.1",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-prettier": "5.2.1",
     "eslint-plugin-react": "7.37.0",
