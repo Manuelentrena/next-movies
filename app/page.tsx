@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { useMovies } from "store/Movies.context";
 
 export default function Page() {
@@ -8,6 +9,7 @@ export default function Page() {
   return (
     <>
       <h1 className="font-serif text-4xl underline">Movies</h1>
+      <Button>Click me</Button>
     </>
   );
 }
