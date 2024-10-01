@@ -52,7 +52,10 @@ export function SearchForm({ getMovies, title, type }: SearchProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="bg-slate-500 mb-6 md:flex items-center justify-center md:space-x-4 p-2 md:p-6">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="mb-6 items-center justify-center bg-slate-500 p-2 md:flex md:space-x-4 md:p-6"
+      >
         <FormField
           control={form.control}
           name="title"
@@ -73,7 +76,7 @@ export function SearchForm({ getMovies, title, type }: SearchProps) {
             <FormItem>
               <FormControl>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger className="md:w-[180px] w-full mb-2 md:mb-0">
+                  <SelectTrigger className="mb-2 w-full md:mb-0 md:w-[180px]">
                     <SelectValue placeholder="Select a type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -92,7 +95,7 @@ export function SearchForm({ getMovies, title, type }: SearchProps) {
             </FormItem>
           )}
         />
-        <Button type="submit" size="icon" className="w-full md:w-10 md:h-10">
+        <Button type="submit" size="icon" className="w-full md:h-10 md:w-10">
           <Search className="h-4 w-4" />
           <span className="sr-only">Buscar películas</span>
         </Button>

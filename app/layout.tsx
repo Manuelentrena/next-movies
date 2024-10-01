@@ -14,10 +14,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <MoviesContextProvider service={serviceMoviesOMDB}>
       <html lang="en">
-        <body><>
-          <Header />
-          {children}
-        </></body>
+        <body>
+          <>
+            <Header />
+            {children}
+          </>
+        </body>
       </html>
     </MoviesContextProvider>
   );

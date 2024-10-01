@@ -6,7 +6,6 @@ import { cn } from "@/utils/utils";
 import { Star } from "lucide-react";
 import { memo, useState } from "react";
 
-
 interface MovieCardProps extends Omit<Movie, "Id"> {
   index: number;
   hovered: number | null;
@@ -35,11 +34,11 @@ const MovieCard: React.FC<MovieCardProps> = memo(({ Title, Year, Type, Poster, h
       ) : null}
 
       {/* Star */}
-      <div className="absolute top-2 right-2 cursor-pointer z-10" onClick={handleStarClick}>
+      <div className="absolute right-2 top-2 z-10 cursor-pointer" onClick={handleStarClick}>
         {isFavorite ? (
-          <Star fill="yellow" strokeWidth={0} className="h-8 w-8 relative " />
+          <Star fill="yellow" strokeWidth={0} className="relative h-8 w-8" />
         ) : (
-          <Star className="h-8 w-8 text-yellow-100 relative " />
+          <Star className="relative h-8 w-8 text-yellow-100" />
         )}
       </div>
       {/* Background */}
@@ -51,9 +50,13 @@ const MovieCard: React.FC<MovieCardProps> = memo(({ Title, Year, Type, Poster, h
       >
         <div>
           <div className="flex flex-col">
-            <span className="bg-gradient-to-b from-neutral-50 to-neutral-200 bg-clip-text text-xl font-extrabold text-transparent sm:text-lg md:text-2xl">{Title} ({Year})</span>
+            <span className="bg-gradient-to-b from-neutral-50 to-neutral-200 bg-clip-text text-xl font-extrabold text-transparent sm:text-lg md:text-2xl">
+              {Title} ({Year})
+            </span>
             <span className="flex">
-              <Badge variant="outline" className="mt-2 bg-primary text-white">{Type}</Badge>
+              <Badge variant="outline" className="mt-2 bg-primary text-white">
+                {Type}
+              </Badge>
             </span>
           </div>
         </div>
