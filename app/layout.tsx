@@ -4,8 +4,8 @@ import Footer from "@/components/global/Footer";
 import { Header } from "@/components/global/Header";
 import { createRepositoryMoviesOMDB } from "@/core/movies/repositories/omdb.repository";
 import { createServiceMovies } from "@/core/movies/services/Movie.services";
-import { MoviesContextProvider } from "@/store/movies.context";
 import { Providers } from "@/store/providers";
+import { ServiceMoviesContextProvider } from "@/store/repository/movies.context";
 
 import "@/styles/global.css";
 
@@ -15,7 +15,7 @@ const serviceMoviesOMDB = createServiceMovies(repositoryMoviesOMDB);
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <Providers>
-      <MoviesContextProvider service={serviceMoviesOMDB}>
+      <ServiceMoviesContextProvider service={serviceMoviesOMDB}>
         <html lang="en">
           <body className="bg-muted">
             <Header />
@@ -23,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Footer />
           </body>
         </html>
-      </MoviesContextProvider>
+      </ServiceMoviesContextProvider>
     </Providers>
   );
 }
