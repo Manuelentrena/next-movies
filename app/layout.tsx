@@ -1,5 +1,6 @@
 "use client";
 
+import Footer from "@/components/global/Footer";
 import { Header } from "@/components/global/Header";
 import { createRepositoryMoviesOMDB } from "@/core/movies/repositories/omdb.repository";
 import { createServiceMovies } from "@/core/movies/services/Movie.services";
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <>
             <Header />
             {children}
+            <Footer />
           </>
         </body>
       </html>
