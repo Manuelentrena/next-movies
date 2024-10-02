@@ -4,6 +4,7 @@ export type Movie = {
   Id: string;
   Type: TypesMovie;
   Poster: string | null;
+  Fav: boolean;
 };
 
 export enum TypesMovie {

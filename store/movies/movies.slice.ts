@@ -23,9 +23,15 @@ export const moviesSlice = createSlice({
     setMovieDetail: (state, action: PayloadAction<MovieDetail>) => {
       state.movieDetail = action.payload;
     },
+    toggleFavMovie: (state, action: PayloadAction<string>) => {
+      const movie = state.movies.find((movie) => movie.Id === action.payload);
+      if (movie) {
+        movie.Fav = !movie.Fav;
+      }
+    },
   },
 });
 
-export const { setMovies, setTotal, setMovieDetail, setNextMovies } = moviesSlice.actions;
+export const { setMovies, setTotal, setMovieDetail, setNextMovies, toggleFavMovie } = moviesSlice.actions;
 
 export default moviesSlice.reducer;

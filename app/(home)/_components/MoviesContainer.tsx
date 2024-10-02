@@ -19,6 +19,7 @@ export default function MoviesContainer({ movies }: { movies: Movie[] }) {
           index={index}
           hovered={hovered}
           setHovered={setHovered}
+          Fav={movie.Fav}
         />
       ))}
     </div>

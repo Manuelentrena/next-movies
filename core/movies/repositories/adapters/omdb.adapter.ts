@@ -9,6 +9,7 @@ export function adapterMoviesListOMDB(movies: MoviesListOMBD) {
       Id: movie.imdbID,
       Type: movie.Type as TypesMovie,
       Poster: movie.Poster !== "N/A" ? movie.Poster : null,
+      Fav: false,
     })),
     Total: movies.totalResults,
   } as MovieList;
