@@ -13,7 +13,8 @@ interface MovieDetailProps {
 
 const MovieDetail: FC<MovieDetailProps> = ({ params }) => {
   const { id } = params;
-  const { movieDetail, getMovie } = useMovies();
+  const { moviesState, getMovie } = useMovies();
+  const { movieDetail } = moviesState;
 
   const hasFetchedMovieDetail = useRef(false);
 

@@ -31,3 +31,9 @@ export type MovieDetail = {
   Score: string | null;
   Plot: string | null;
 };
+
+export type MoviesStore = {
+  movies: Movie[];
+  total: number;
+  movieDetail: MovieDetail;
+};

@@ -16,7 +16,7 @@ export default function Page() {
   const title = searchParams.get("title") ?? MOVIE_SEARCH_BY_DEFAULT;
   const type = (searchParams.get("type") as TypesMovie) ?? TypesMovie.ALL;
 
-  const { movies, getMovies, getMoviesNextPage, currentTotal } = useMovies();
+  const { getMovies, getMoviesNextPage, moviesState } = useMovies();
 
   const observerRef = useRef(null);
   const { isObserver } = useObserver({ externalRef: observerRef });
@@ -40,9 +40,9 @@ export default function Page() {
   return (
     <>
       <SearchForm getMovies={getMovies} title={title} type={type} />
-      <MoviesContainer movies={movies} />
+      <MoviesContainer movies={moviesState.movies} />
       <ScrollToTopButton />
-      <Counter total={currentTotal} state={movies.length} />
+      <Counter total={moviesState.total} state={moviesState.movies.length} />
       <div id="scroll" ref={observerRef}></div>
     </>
   );
