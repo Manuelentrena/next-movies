@@ -1,14 +1,13 @@
-import { PAGE_BY_DEFAULT } from "@/config/initial";
 import { GetMovies } from "@/core/movies/domain/contract/MovieRepository";
 import { handleMoviesError } from "@/core/movies/domain/errors/handleError";
-import { TypesMovie } from "@/core/movies/domain/Movie";
 import { MoviesContext } from "@/store/movies.context";
 
-import { useCallback, useContext, useEffect, useRef } from "react";
+import { useCallback, useContext } from "react";
 
-export const useMovies = ({ title, type }: { title: string; type: TypesMovie }) => {
+export const useMovies = () => {
   const {
     movies,
+    movieDetail,
     currentTotal,
     currentPage,
     currentTitle,
@@ -19,16 +18,8 @@ export const useMovies = ({ title, type }: { title: string; type: TypesMovie }) 
     setTotal,
     setType,
     setMovies,
+    setMovieDetail,
   } = useContext(MoviesContext);
-
-  const hasFetchedMovies = useRef(false);
-
-  useEffect(() => {
-    if (!hasFetchedMovies.current) {
-      getMovies({ title, type, page: PAGE_BY_DEFAULT });
-      hasFetchedMovies.current = true;
-    }
-  }, []);
 
   const getMovies = useCallback(
     async ({ title, type, page }: GetMovies) => {
@@ -57,10 +48,24 @@ export const useMovies = ({ title, type }: { title: string; type: TypesMovie }) 
     }
   }, [service, currentPage, currentTitle, currentType]);
 
+  const getMovie = useCallback(
+    async ({ id }: { id: string }) => {
+      try {
+        const movieDetail = await service.getMovie({ id });
+        setMovieDetail(movieDetail);
+      } catch (error) {
+        handleMoviesError(error as Error);
+      }
+    },
+    [service, currentTitle, currentType],
+  );
+
   return {
     getMovies,
+    getMovie,
     getMoviesNextPage,
     movies,
+    movieDetail,
     currentTotal,
     currentPage,
     currentTitle,

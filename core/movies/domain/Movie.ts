@@ -20,13 +20,14 @@ export type MovieList = {
 export type MovieDetail = {
   Id: string;
   Title: string;
-  Year: string;
+  Year: string | null;
   Type: TypesMovie;
   Poster: string | null;
-  Rated: string;
-  Released: string;
-  Runtime: string;
-  Genre: string;
-  Director: string;
-  Score: string;
+  Rated: string | null;
+  Released: string | null;
+  Runtime: string | null;
+  Genre: string | null;
+  Director: string | null;
+  Score: string | null;
+  Plot: string | null;
 };
