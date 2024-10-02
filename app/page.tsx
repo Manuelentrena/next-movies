@@ -1,6 +1,7 @@
 "use client";
 
 import { MoviesContainer } from "@/app/_components";
+import ScrollToTopButton from "@/components/global/ScrollToTopButton";
 import { SearchForm } from "@/components/global/SearchForm";
 import { MOVIE_SEARCH_BY_DEFAULT } from "@/config/initial";
 import { TypesMovie } from "@/core/movies/domain/Movie";
@@ -32,6 +33,7 @@ export default function Page() {
     <>
       <SearchForm getMovies={getMovies} title={title} type={type} />
       <MoviesContainer movies={movies} />
+      <ScrollToTopButton />
       <div id="scroll" ref={observerRef}></div>
     </>
   );
