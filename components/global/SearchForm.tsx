@@ -11,10 +11,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { GetMovies } from "@/core/movies/domain/contract/MovieRepository";
+import { Search } from "@/core/movies/domain/contract/MovieRepository";
 import { TypesMovie } from "@/core/movies/domain/Movie";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Search } from "lucide-react";
+import { Search as SearchIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -30,7 +30,7 @@ const formSchema = z.object({
 });
 
 interface SearchProps {
-  getMovies: (values: GetMovies) => void;
+  getMovies: (values: Search) => void;
   title: string;
   type: TypesMovie;
 }
@@ -96,7 +96,7 @@ export function SearchForm({ getMovies, title, type }: SearchProps) {
           )}
         />
         <Button type="submit" size="icon" className="w-full md:h-10 md:w-10">
-          <Search className="h-4 w-4" />
+          <SearchIcon className="h-4 w-4" />
           <span className="sr-only">Buscar películas</span>
         </Button>
       </form>

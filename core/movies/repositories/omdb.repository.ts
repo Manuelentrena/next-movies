@@ -1,5 +1,5 @@
 import { API_KEY, BASE_URL } from "@/config/env";
-import { GetMovie, GetMovies, MovieRepository } from "@/core/movies/domain/contract/MovieRepository";
+import { MovieRepository, Search, SearchById } from "@/core/movies/domain/contract/MovieRepository";
 import { NotFoundMovieError } from "@/core/movies/domain/errors/not_found_movie.error";
 import { adapterMovieDetailOMDB, adapterMoviesListOMDB } from "@/core/movies/repositories/adapters/omdb.adapter";
 import { MovieDetailOMBD, MoviesListOMBD } from "@/core/movies/repositories/types/omdb.types";
@@ -7,7 +7,7 @@ import { PaginationMovieError } from "../domain/errors/pagination_movie.error";
 
 export const createRepositoryMoviesOMDB = (): MovieRepository => {
   return {
-    getMovies: async ({ title, type, page }: GetMovies) => {
+    getMovies: async ({ title, type, page }: Search) => {
       const url = `${BASE_URL}${API_KEY}&s=${title}&page=${page}${type !== "all" ? `&type=${type}` : ""}`;
       const res = await fetch(url);
       const data = (await res.json()) as MoviesListOMBD;
@@ -26,7 +26,7 @@ export const createRepositoryMoviesOMDB = (): MovieRepository => {
 
       throw new Error("Unexpected response format.");
     },
-    getMovie: async ({ id }: GetMovie) => {
+    getMovie: async ({ id }: SearchById) => {
       const url = `${BASE_URL}${API_KEY}&i=${id}`;
       const res = await fetch(url);
       const data = (await res.json()) as MovieDetailOMBD;
