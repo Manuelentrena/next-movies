@@ -1,5 +1,6 @@
 import { PAGE_BY_DEFAULT } from "@/config/initial";
 import { GetMovies } from "@/core/movies/domain/contract/MovieRepository";
+import { handleMoviesError } from "@/core/movies/domain/errors/handleError";
 import { TypesMovie } from "@/core/movies/domain/Movie";
 import { MoviesContext } from "@/store/movies.context";
 
@@ -31,21 +32,29 @@ export const useMovies = ({ title, type }: { title: string; type: TypesMovie }) 
 
   const getMovies = useCallback(
     async ({ title, type, page }: GetMovies) => {
-      const moviesList = await service.getMovies({ title, type, page });
-      setMovies(moviesList.Movies);
-      setTotal(Number(moviesList.Total));
-      setTitle(title);
-      setType(type);
-      setPage(page);
+      try {
+        const moviesList = await service.getMovies({ title, type, page });
+        setMovies(moviesList.Movies);
+        setTotal(Number(moviesList.Total));
+        setTitle(title);
+        setType(type);
+        setPage(page);
+      } catch (error) {
+        handleMoviesError(error as Error);
+      }
     },
     [service, currentTitle, currentType],
   );
 
   const getMoviesNextPage = useCallback(async () => {
-    const moviesList = await service.getMovies({ title: currentTitle, type: currentType, page: currentPage + 1 });
-    setMovies((prevMovies) => prevMovies.concat(moviesList.Movies));
-    setTotal(Number(moviesList.Total));
-    setPage((prev) => prev + 1);
+    try {
+      const moviesList = await service.getMovies({ title: currentTitle, type: currentType, page: currentPage + 1 });
+      setMovies((prevMovies) => prevMovies.concat(moviesList.Movies));
+      setTotal(Number(moviesList.Total));
+      setPage((prev) => prev + 1);
+    } catch (error) {
+      handleMoviesError(error as Error);
+    }
   }, [service, currentPage, currentTitle, currentType]);
 
   return {
