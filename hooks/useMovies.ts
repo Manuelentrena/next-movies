@@ -1,52 +1,40 @@
-import { GetMovies } from "@/core/movies/domain/contract/MovieRepository";
+import { Search } from "@/core/movies/domain/contract/MovieRepository";
 import { handleMoviesError } from "@/core/movies/domain/errors/handleError";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { MoviesContext } from "@/store/movies.context";
+import { incrementPage, setSearchParams } from "@/store/search/searchSlice";
 
 import { useCallback, useContext } from "react";
 
 export const useMovies = () => {
-  const {
-    movies,
-    movieDetail,
-    currentTotal,
-    currentPage,
-    currentTitle,
-    currentType,
-    service,
-    setPage,
-    setTitle,
-    setTotal,
-    setType,
-    setMovies,
-    setMovieDetail,
-  } = useContext(MoviesContext);
+  const dispatch = useAppDispatch();
+  const search = useAppSelector((state) => state.searchReducer);
+  const { movies, movieDetail, currentTotal, service, setTotal, setMovies, setMovieDetail } = useContext(MoviesContext);
 
   const getMovies = useCallback(
-    async ({ title, type, page }: GetMovies) => {
+    async ({ title, type, page }: Search) => {
       try {
         const moviesList = await service.getMovies({ title, type, page });
         setMovies(moviesList.Movies);
         setTotal(Number(moviesList.Total));
-        setTitle(title);
-        setType(type);
-        setPage(page);
+        dispatch(setSearchParams({ title, type }));
       } catch (error) {
         handleMoviesError(error as Error);
       }
     },
-    [service, currentTitle, currentType],
+    [service, search.title, search.type],
   );
 
   const getMoviesNextPage = useCallback(async () => {
     try {
-      const moviesList = await service.getMovies({ title: currentTitle, type: currentType, page: currentPage + 1 });
+      const moviesList = await service.getMovies({ title: search.title, type: search.type, page: search.page + 1 });
       setMovies((prevMovies) => prevMovies.concat(moviesList.Movies));
       setTotal(Number(moviesList.Total));
-      setPage((prev) => prev + 1);
+      dispatch(incrementPage());
     } catch (error) {
       handleMoviesError(error as Error);
     }
-  }, [service, currentPage, currentTitle, currentType]);
+  }, [service, search.page, search.title, search.type]);
 
   const getMovie = useCallback(
     async ({ id }: { id: string }) => {
@@ -57,7 +45,7 @@ export const useMovies = () => {
         handleMoviesError(error as Error);
       }
     },
-    [service, currentTitle, currentType],
+    [service, search.title, search.type],
   );
 
   return {
@@ -67,8 +55,6 @@ export const useMovies = () => {
     movies,
     movieDetail,
     currentTotal,
-    currentPage,
-    currentTitle,
-    currentType,
+    search,
   };
 };
