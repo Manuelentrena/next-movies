@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <MoviesContextProvider service={serviceMoviesOMDB}>
       <html lang="en">
-        <body>
+        <body className="bg-muted">
           <Header />
           {children}
           <Footer />
