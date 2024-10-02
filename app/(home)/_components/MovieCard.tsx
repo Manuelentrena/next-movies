@@ -4,25 +4,33 @@ import { Badge } from "@/components/ui/badge";
 import { Movie } from "@/core/movies/domain/Movie";
 import { cn } from "@/utils/utils";
 import { Star } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { memo, useState } from "react";
 
-interface MovieCardProps extends Omit<Movie, "Id"> {
+interface MovieCardProps extends Movie {
   index: number;
   hovered: number | null;
   setHovered: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
-const MovieCard: React.FC<MovieCardProps> = memo(({ Title, Year, Type, Poster, hovered, index, setHovered }) => {
+const MovieCard: React.FC<MovieCardProps> = memo(({ Title, Year, Type, Poster, hovered, index, setHovered, Id }) => {
   const [isFavorite, setIsFavorite] = useState(false);
+  const router = useRouter();
 
-  const handleStarClick = () => {
+  const handleStarClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
     setIsFavorite(!isFavorite);
+  };
+
+  const handleMovieDetail = (Id: string) => {
+    router.push(`/movie/${Id}`);
   };
 
   return (
     <div
       onMouseEnter={() => setHovered(index)}
       onMouseLeave={() => setHovered(null)}
+      onClick={() => handleMovieDetail(Id)}
       className={cn(
         "relative h-60 w-full overflow-hidden rounded-lg bg-gray-100 transition-all duration-300 ease-out md:h-96 dark:bg-neutral-900",
         hovered !== null && hovered !== index && "scale-[0.98] blur-sm",

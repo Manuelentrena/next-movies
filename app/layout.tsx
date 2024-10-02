@@ -16,11 +16,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <MoviesContextProvider service={serviceMoviesOMDB}>
       <html lang="en">
         <body>
-          <>
-            <Header />
-            {children}
-            <Footer />
-          </>
+          <Header />
+          {children}
+          <Footer />
         </body>
       </html>
     </MoviesContextProvider>

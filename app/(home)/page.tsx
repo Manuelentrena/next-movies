@@ -1,6 +1,6 @@
 "use client";
 
-import { MoviesContainer } from "@/app/_components";
+import { MoviesContainer } from "@/app/(home)/_components";
 import ScrollToTopButton from "@/components/global/ScrollToTopButton";
 import { SearchForm } from "@/components/global/SearchForm";
 import { MOVIE_SEARCH_BY_DEFAULT } from "@/config/initial";

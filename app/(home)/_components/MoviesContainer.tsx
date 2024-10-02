@@ -1,4 +1,6 @@
-import MovieCard from "@/app/_components/MovieCard";
+"use client";
+
+import MovieCard from "@/app/(home)/_components/MovieCard";
 import { Movie } from "@/core/movies/domain/Movie";
 import { useState } from "react";
 
@@ -9,6 +11,7 @@ export default function MoviesContainer({ movies }: { movies: Movie[] }) {
       {movies.map((movie, index) => (
         <MovieCard
           key={movie.Id}
+          Id={movie.Id}
           Title={movie.Title}
           Year={movie.Year}
           Type={movie.Type}
