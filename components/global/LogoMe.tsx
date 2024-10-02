@@ -8,7 +8,7 @@ export function LogoMe() {
       y={0}
       viewBox="0 0 1997.8 876.1"
       width="40"
-      height="auto"
+      height="40"
     >
       <style>{".st1{fill:currentColor}"}</style>
       <g>
