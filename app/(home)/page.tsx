@@ -1,6 +1,6 @@
 "use client";
 
-import { MoviesContainer } from "@/app/(home)/_components";
+import { Counter, MoviesContainer } from "@/app/(home)/_components";
 import ScrollToTopButton from "@/components/global/ScrollToTopButton";
 import { SearchForm } from "@/components/global/SearchForm";
 import { MOVIE_SEARCH_BY_DEFAULT, PAGE_BY_DEFAULT } from "@/config/initial";
@@ -9,7 +9,6 @@ import { useMovies } from "@/hooks/useMovies";
 import useObserver from "@/hooks/useObserver";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
-import Counter from "./_components/Counter";
 
 export default function Page() {
   const searchParams = useSearchParams();
