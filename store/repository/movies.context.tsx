@@ -1,23 +1,27 @@
+import { FavsRepository } from "@/core/movies/domain/contract/FavsRepository";
 import { MovieRepository } from "@/core/movies/domain/contract/MovieRepository";
 import { createContext } from "react";
 
-export interface ServiceMoviesContextState {
-  service: MovieRepository;
+export interface ServiceContextState {
+  serviceAPI: MovieRepository;
+  serviceFAVS: FavsRepository;
 }
 
-export const ServiceMoviesContext = createContext({} as ServiceMoviesContextState);
+export const ServiceContext = createContext({} as ServiceContextState);
 
-export const ServiceMoviesContextProvider = ({
+export const ServiceContextProvider = ({
   children,
-  service,
-}: React.PropsWithChildren<{ service: MovieRepository }>) => {
+  serviceAPI,
+  serviceFAVS,
+}: React.PropsWithChildren<{ serviceAPI: MovieRepository; serviceFAVS: FavsRepository }>) => {
   return (
-    <ServiceMoviesContext.Provider
+    <ServiceContext.Provider
       value={{
-        service,
+        serviceAPI,
+        serviceFAVS,
       }}
     >
       {children}
-    </ServiceMoviesContext.Provider>
+    </ServiceContext.Provider>
   );
 };
