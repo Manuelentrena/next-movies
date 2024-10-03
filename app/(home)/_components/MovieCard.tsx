@@ -2,12 +2,11 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Movie } from "@/core/movies/domain/Movie";
-import { toggleFavMovie } from "@/store/movies/movies.slice";
+import { useMovies } from "@/hooks/useMovies";
 import { cn } from "@/utils/utils";
 import { Star } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { memo } from "react";
-import { useDispatch } from "react-redux";
 
 interface MovieCardProps extends Movie {
   index: number;
@@ -18,11 +17,12 @@ interface MovieCardProps extends Movie {
 const MovieCard: React.FC<MovieCardProps> = memo(
   ({ Title, Year, Type, Poster, hovered, index, setHovered, Id, Fav }) => {
     const router = useRouter();
-    const dispatch = useDispatch();
+    const { toggleFav } = useMovies();
 
     const handleStarClick = (event: React.MouseEvent) => {
       event.stopPropagation();
-      dispatch(toggleFavMovie(Id));
+      const movie = { Year, Type, Poster, Id, Fav, Title };
+      toggleFav({ movie });
     };
 
     const handleMovieDetail = (Id: string) => {

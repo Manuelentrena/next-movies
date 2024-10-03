@@ -1,13 +1,14 @@
 import { Search } from "@/core/movies/domain/contract/MovieRepository";
 import { handleMoviesError } from "@/core/movies/domain/errors/handleError";
+import { Movie } from "@/core/movies/domain/Movie";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setMovieDetail, setMovies, setNextMovies, setTotal } from "@/store/movies/movies.slice";
+import { setMovieDetail, setMovies, setNextMovies, setTotal, toggleFavMovie } from "@/store/movies/movies.slice";
 import { ServiceContext } from "@/store/repository/movies.context";
 import { incrementPage, setSearchParams } from "@/store/search/search.slice";
 import { useCallback, useContext } from "react";
 
 export const useMovies = () => {
-  const { serviceAPI } = useContext(ServiceContext);
+  const { serviceAPI, serviceFAVS, syncFavs } = useContext(ServiceContext);
   const dispatch = useAppDispatch();
   const searchState = useAppSelector((state) => state.searchReducer);
   const moviesState = useAppSelector((state) => state.moviesReducer);
@@ -16,9 +17,7 @@ export const useMovies = () => {
     async ({ title, type, page }: Search) => {
       try {
         const moviesList = await serviceAPI.getMovies({ title, type, page });
-        // antes de hacer el resto de operaciones, sincronizamos el estado
-
-        dispatch(setMovies(moviesList.Movies));
+        dispatch(setMovies(syncFavs(moviesList.Movies)));
         dispatch(setTotal(Number(moviesList.Total)));
         dispatch(setSearchParams({ title, type }));
       } catch (error) {
@@ -35,7 +34,7 @@ export const useMovies = () => {
         type: searchState.type,
         page: searchState.page + 1,
       });
-      dispatch(setNextMovies(moviesList.Movies));
+      dispatch(setNextMovies(syncFavs(moviesList.Movies)));
       dispatch(setTotal(Number(moviesList.Total)));
       dispatch(incrementPage());
     } catch (error) {
@@ -55,10 +54,27 @@ export const useMovies = () => {
     [serviceAPI, searchState.title, searchState.type],
   );
 
+  const toggleFav = useCallback(
+    async ({ movie }: { movie: Movie }) => {
+      try {
+        dispatch(toggleFavMovie(movie.Id));
+        if (movie.Fav) {
+          serviceFAVS.removeFav(movie.Id);
+        } else {
+          serviceFAVS.addFav({ ...movie, Fav: true });
+        }
+      } catch (error) {
+        handleMoviesError(error as Error);
+      }
+    },
+    [serviceFAVS],
+  );
+
   return {
     getMovies,
     getMovie,
     getMoviesNextPage,
+    toggleFav,
     moviesState,
     searchState,
   };
