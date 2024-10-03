@@ -55,59 +55,66 @@ export function SearchForm({ getMovies }: SearchProps) {
   };
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="mb-6 items-center justify-center bg-slate-500 p-2 md:flex md:space-x-4 md:p-6"
-      >
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input
-                  placeholder="title"
-                  {...field}
-                  className="mb-2 border-4 border-primary bg-white text-lg shadow-none md:mb-0"
-                />
-              </FormControl>
+    <>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="mb-6 items-center justify-center bg-slate-500 p-2 md:flex md:space-x-4 md:p-6"
+        >
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    placeholder="title"
+                    {...field}
+                    className="mb-2 border-4 border-primary bg-white text-lg shadow-none md:mb-0"
+                  />
+                </FormControl>
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="type"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger className="mb-2 w-full border-4 border-primary bg-white text-lg md:mb-0 md:w-[180px]">
-                    <SelectValue placeholder="Select a type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Types</SelectLabel>
-                      {Object.values(TypesMovie).map((type) => (
-                        <SelectItem key={type} value={type}>
-                          {type.toLocaleUpperCase()}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" size="icon" className="w-full md:h-10 md:w-10">
-          <SearchIcon className="h-4 w-4" />
-          <span className="sr-only">Buscar películas</span>
-        </Button>
-      </form>
-    </Form>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="type"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <SelectTrigger className="mb-2 w-full border-4 border-primary bg-white text-lg md:mb-0 md:w-[180px]">
+                      <SelectValue placeholder="Select a type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Types</SelectLabel>
+                        {Object.values(TypesMovie).map((type) => (
+                          <SelectItem key={type} value={type}>
+                            {type.toLocaleUpperCase()}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit" size="icon" className="w-full md:h-10 md:w-10">
+            <SearchIcon className="h-4 w-4" />
+            <span className="sr-only">Buscar películas</span>
+          </Button>
+        </form>
+      </Form>
+      <div className="container my-4 w-full max-w-5xl px-2 text-2xl md:px-8">
+        <p className="text-primary">
+          Resultados con: <span className="font-bold">{'"' + title + '"'}</span>
+        </p>
+      </div>
+    </>
   );
 }
