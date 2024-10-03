@@ -11,6 +11,8 @@ export enum TypesMovie {
   ALL = "all",
   MOVIE = "movie",
   SERIES = "series",
+  GAMES = "game",
+  FAVS = "favs",
 }
 
 export type MovieList = {

@@ -8,7 +8,7 @@ import useObserver from "@/hooks/useObserver";
 import { useEffect, useRef } from "react";
 
 export default function Page() {
-  const { getMovies, getMoviesNextPage, moviesState } = useMovies();
+  const { getMovies, getMoviesNextPage, moviesState, getFavs } = useMovies();
 
   const observerRef = useRef(null);
   const { isObserver } = useObserver({ externalRef: observerRef });
@@ -22,7 +22,7 @@ export default function Page() {
 
   return (
     <>
-      <SearchForm getMovies={getMovies} />
+      <SearchForm getMovies={getMovies} getFavs={getFavs} />
       <MoviesContainer movies={moviesState.movies} />
       <ScrollToTopButton />
       <Counter total={moviesState.total} state={moviesState.movies.length} />

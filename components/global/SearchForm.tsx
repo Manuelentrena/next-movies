@@ -21,20 +21,26 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
 
-const formSchema = z.object({
-  title: z.string().min(2, {
-    message: "Tile must be at least 3 characters.",
-  }),
-  type: z.enum([TypesMovie.ALL, TypesMovie.MOVIE, TypesMovie.SERIES], {
-    required_error: "One type is required.",
-  }),
-});
+const formSchema = z
+  .object({
+    type: z.enum([TypesMovie.ALL, TypesMovie.MOVIE, TypesMovie.SERIES, TypesMovie.GAMES, TypesMovie.FAVS], {
+      required_error: "One type is required.",
+    }),
+    title: z.string({
+      required_error: "Title is required.",
+    }),
+  })
+  .refine((data) => data.type === TypesMovie.FAVS || data.title.length > 3, {
+    path: ["title"],
+    message: "Title must be at least 3 characters unless type is FAVS.",
+  });
 
 interface SearchProps {
   getMovies: (values: Search) => void;
+  getFavs: (values: Omit<Search, "page">) => void;
 }
 
-export function SearchForm({ getMovies }: SearchProps) {
+export function SearchForm({ getMovies, getFavs }: SearchProps) {
   const searchParams = useSearchParams();
   const title = searchParams.get("title") ?? MOVIE_SEARCH_BY_DEFAULT;
   const type = (searchParams.get("type") as TypesMovie) ?? TypesMovie.ALL;
@@ -50,7 +56,11 @@ export function SearchForm({ getMovies }: SearchProps) {
   });
 
   const onSubmit = ({ title, type }: z.infer<typeof formSchema>) => {
-    getMovies({ title: title, type: type, page: 1 });
+    if (type === TypesMovie.FAVS) {
+      getFavs({ title: title, type: type });
+    } else {
+      getMovies({ title: title, type: type, page: 1 });
+    }
     router.push(`?title=${title}&type=${type}`);
   };
 
@@ -74,7 +84,7 @@ export function SearchForm({ getMovies }: SearchProps) {
                   />
                 </FormControl>
 
-                <FormMessage />
+                <FormMessage className="text-lg" />
               </FormItem>
             )}
           />

@@ -10,9 +10,22 @@ export function createRepositoryFavsLocalStorage(): FavsRepository {
   };
 }
 
-function getFavs() {
+function getFavs({ title }: { title: string }): Movie[] | null {
   const favs = getFavsFromLocalStorage();
-  return Array.from(favs.values());
+
+  if (!favs.size) {
+    return null;
+  }
+
+  if (title.trim() === "") {
+    return Array.from(favs.values());
+  }
+
+  const filteredFavs = Array.from(favs.values()).filter((movie: Movie) =>
+    movie.Title.toLowerCase().includes(title.toLowerCase()),
+  );
+
+  return filteredFavs.length > 0 ? filteredFavs : null;
 }
 
 function addFav(fav: Movie) {

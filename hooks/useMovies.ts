@@ -70,8 +70,24 @@ export const useMovies = () => {
     [serviceFAVS],
   );
 
+  const getFavs = useCallback(
+    ({ title, type }: Omit<Search, "page">) => {
+      try {
+        const movies = serviceFAVS.getFavs({ title });
+        if (!movies) return;
+        dispatch(setMovies(movies));
+        dispatch(setTotal(Number(movies.length)));
+        dispatch(setSearchParams({ title, type }));
+      } catch (error) {
+        handleMoviesError(error as Error);
+      }
+    },
+    [serviceFAVS, searchState.title, searchState.type],
+  );
+
   return {
     getMovies,
+    getFavs,
     getMovie,
     getMoviesNextPage,
     toggleFav,
