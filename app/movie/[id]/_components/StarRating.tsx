@@ -9,7 +9,6 @@ const StarRating: React.FC<StarRatingProps> = ({ score }) => {
   const fullStars = Math.floor(scaledScore / 2);
   const hasHalfStar = scaledScore % 2 >= 1;
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-  console.log({ fullStars, hasHalfStar, emptyStars, score });
 
   return (
     <>

@@ -19,7 +19,6 @@ const MovieCard: React.FC<MovieCardProps> = memo(
   ({ Title, Year, Type, Poster, hovered, index, setHovered, Id, Fav }) => {
     const router = useRouter();
     const dispatch = useDispatch();
-    console.log({ Fav });
 
     const handleStarClick = (event: React.MouseEvent) => {
       event.stopPropagation();
