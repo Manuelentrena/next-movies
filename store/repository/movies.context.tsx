@@ -4,6 +4,7 @@ import { MovieRepository } from "@/core/movies/domain/contract/MovieRepository";
 import { Movie, TypesMovie } from "@/core/movies/domain/Movie";
 import { useAppDispatch } from "@/store/hooks";
 import { setMovies, setTotal } from "@/store/movies/movies.slice";
+import { setSearchParams } from "@/store/search/search.slice";
 import { useSearchParams } from "next/navigation";
 import { createContext, useEffect, useRef } from "react";
 
@@ -24,16 +25,20 @@ export const ServiceContextProvider = ({
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
 
+  const title = searchParams.get("title") ?? MOVIE_SEARCH_BY_DEFAULT;
+  const type = (searchParams.get("type") as TypesMovie) ?? TYPE_BY_DEFAULT;
+
   useEffect(() => {
     const initLoading = async () => {
       if (!hasFetchedMovies.current) {
         const moviesList = await serviceAPI.getMovies({
-          title: searchParams.get("title") ?? MOVIE_SEARCH_BY_DEFAULT,
-          type: (searchParams.get("type") as TypesMovie) ?? TYPE_BY_DEFAULT,
+          title: title,
+          type: type,
           page: PAGE_BY_DEFAULT,
         });
         dispatch(setMovies(syncFavs(moviesList.Movies)));
         dispatch(setTotal(Number(moviesList.Total)));
+        dispatch(setSearchParams({ title, type }));
         hasFetchedMovies.current = true;
       }
     };
