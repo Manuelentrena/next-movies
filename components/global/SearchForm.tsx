@@ -66,7 +66,11 @@ export function SearchForm({ getMovies }: SearchProps) {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="title" {...field} className="mb-2 md:mb-0" />
+                <Input
+                  placeholder="title"
+                  {...field}
+                  className="mb-2 border-4 border-primary bg-white text-lg shadow-none md:mb-0"
+                />
               </FormControl>
 
               <FormMessage />
@@ -80,7 +84,7 @@ export function SearchForm({ getMovies }: SearchProps) {
             <FormItem>
               <FormControl>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger className="mb-2 w-full md:mb-0 md:w-[180px]">
+                  <SelectTrigger className="mb-2 w-full border-4 border-primary bg-white text-lg md:mb-0 md:w-[180px]">
                     <SelectValue placeholder="Select a type" />
                   </SelectTrigger>
                   <SelectContent>

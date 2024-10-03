@@ -44,10 +44,10 @@ const MovieDetail: FC<MovieDetailProps> = ({ params }) => {
   return (
     movieDetail &&
     Object.keys(movieDetail).length > 0 && (
-      <section className="w-full bg-muted py-6 text-foreground md:py-12 lg:py-20">
+      <section className="w-full bg-muted pb-24 text-foreground sm:pb-24">
         {/* Navbar */}
-        <div className="container flex w-full items-center justify-between px-4 py-2">
-          <Button onClick={() => router.back()} variant="outline" className="flex items-center">
+        <div className="container flex w-full max-w-5xl items-center justify-between px-8 py-8">
+          <Button onClick={() => router.back()} variant="outline" className="flex items-center border-4 border-primary">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back Page
           </Button>
@@ -60,15 +60,15 @@ const MovieDetail: FC<MovieDetailProps> = ({ params }) => {
           </Button>
         </div>
         {/* MovieDetail */}
-        <div className="container grid grid-cols-1 gap-8 px-4 md:grid-cols-2 md:gap-12 lg:gap-16">
+        <div className="container grid max-w-5xl grid-cols-1 gap-8 px-8 md:grid-cols-2 md:gap-12 lg:gap-16">
           {/* Poster */}
-          <div className="relative overflow-hidden rounded-lg">
+          <div className="relative overflow-hidden rounded-lg shadow-2xl shadow-primary">
             <img
               src={movieDetail.Poster ? movieDetail.Poster : "/poster_not_found.webp"}
               width={300}
               height={450}
               alt={movieDetail.Title}
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover shadow-lg shadow-cyan-500/50"
               style={{ aspectRatio: "300/450", objectFit: "cover" }}
             />
           </div>
