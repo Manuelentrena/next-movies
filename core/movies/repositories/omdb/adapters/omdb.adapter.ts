@@ -1,5 +1,5 @@
 import { MovieDetail, MovieList, TypesMovie } from "@/core/movies/domain/Movie";
-import { MovieDetailOMBD, MoviesListOMBD } from "@/core/movies/repositories/types/omdb.types";
+import { MovieDetailOMBD, MoviesListOMBD } from "@/core/movies/repositories/omdb/types/omdb.types";
 
 export function adapterMoviesListOMDB(movies: MoviesListOMBD) {
   return {

@@ -2,7 +2,7 @@
 
 import Footer from "@/components/global/Footer";
 import { Header } from "@/components/global/Header";
-import { createRepositoryMoviesOMDB } from "@/core/movies/repositories/omdb.repository";
+import { createRepositoryMoviesOMDB } from "@/core/movies/repositories/omdb/omdb.repository";
 import { createServiceMovies } from "@/core/movies/services/Movie.services";
 import { Providers } from "@/store/providers";
 import { ServiceMoviesContextProvider } from "@/store/repository/movies.context";
