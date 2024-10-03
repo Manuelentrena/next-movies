@@ -1,6 +1,6 @@
 export type Movie = {
   Title: string;
-  Year: string;
+  Year: string | null;
   Id: string;
   Type: TypesMovie;
   Poster: string | null;
@@ -31,6 +31,7 @@ export type MovieDetail = {
   Director: string | null;
   Score: string | null;
   Plot: string | null;
+  Fav: boolean;
 };
 
 export type MoviesStore = {

@@ -46,7 +46,7 @@ export const useMovies = () => {
     async ({ id }: { id: string }) => {
       try {
         const movieDetail = await serviceAPI.getMovie({ id });
-        dispatch(setMovieDetail(movieDetail));
+        dispatch(setMovieDetail({ ...movieDetail, Fav: serviceFAVS.getFav(movieDetail.Id)?.Fav ?? false }));
       } catch (error) {
         handleMoviesError(error as Error);
       }

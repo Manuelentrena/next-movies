@@ -28,6 +28,9 @@ export const moviesSlice = createSlice({
       if (movie) {
         movie.Fav = !movie.Fav;
       }
+      if (state.movieDetail?.Id === action.payload) {
+        state.movieDetail.Fav = !state.movieDetail.Fav;
+      }
     },
   },
 });

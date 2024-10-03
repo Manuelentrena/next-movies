@@ -17,7 +17,7 @@ interface MovieDetailProps {
 const MovieDetail: FC<MovieDetailProps> = ({ params }) => {
   const router = useRouter();
   const { id } = params;
-  const { moviesState, getMovie } = useMovies();
+  const { moviesState, getMovie, toggleFav } = useMovies();
   const { movieDetail } = moviesState;
 
   const hasFetchedMovieDetail = useRef(false);
@@ -29,6 +29,18 @@ const MovieDetail: FC<MovieDetailProps> = ({ params }) => {
     }
   }, []);
 
+  const handleStarClick = () => {
+    const movie = {
+      Year: movieDetail.Year,
+      Type: movieDetail.Type,
+      Poster: movieDetail.Poster,
+      Id: movieDetail.Id,
+      Fav: movieDetail.Fav,
+      Title: movieDetail.Title,
+    };
+    toggleFav({ movie });
+  };
+
   return (
     movieDetail &&
     Object.keys(movieDetail).length > 0 && (
@@ -39,8 +51,12 @@ const MovieDetail: FC<MovieDetailProps> = ({ params }) => {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back Page
           </Button>
-          <Button variant="default" className="flex items-center">
-            <Star className="h-4 w-4" />
+          <Button onClick={handleStarClick} variant="default" className="flex items-center">
+            {movieDetail.Fav ? (
+              <Star fill="yellow" strokeWidth={0} className="relative h-4 w-4" />
+            ) : (
+              <Star className="h-4 w-4" />
+            )}
           </Button>
         </div>
         {/* MovieDetail */}

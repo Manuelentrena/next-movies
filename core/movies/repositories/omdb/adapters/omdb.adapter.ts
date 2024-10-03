@@ -29,5 +29,6 @@ export function adapterMovieDetailOMDB(movie: MovieDetailOMBD) {
     Director: movie.Director !== "N/A" ? movie.Director : null,
     Score: movie.Metascore !== "N/A" ? movie.Metascore : null,
     Plot: movie.Plot !== "N/A" ? movie.Plot : null,
+    Fav: false,
   } as MovieDetail;
 }
