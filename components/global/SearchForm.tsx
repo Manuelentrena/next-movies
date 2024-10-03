@@ -11,11 +11,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { MOVIE_SEARCH_BY_DEFAULT } from "@/config/initial";
 import { Search } from "@/core/movies/domain/contract/MovieRepository";
 import { TypesMovie } from "@/core/movies/domain/Movie";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Search as SearchIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
@@ -31,12 +32,15 @@ const formSchema = z.object({
 
 interface SearchProps {
   getMovies: (values: Search) => void;
-  title: string;
-  type: TypesMovie;
 }
 
-export function SearchForm({ getMovies, title, type }: SearchProps) {
+export function SearchForm({ getMovies }: SearchProps) {
+  const searchParams = useSearchParams();
+  const title = searchParams.get("title") ?? MOVIE_SEARCH_BY_DEFAULT;
+  const type = (searchParams.get("type") as TypesMovie) ?? TypesMovie.ALL;
+
   const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
