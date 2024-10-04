@@ -4,8 +4,8 @@ import Footer from "@/components/global/Footer";
 import { Header } from "@/components/global/Header";
 import { createRepositoryFavsLocalStorage } from "@/core/movies/repositories/localstorage/localstorage.repository";
 import { createRepositoryMoviesOMDB } from "@/core/movies/repositories/omdb/omdb.repository";
-import { createServiceFavs } from "@/core/movies/services/Fav.service";
-import { createServiceMovies } from "@/core/movies/services/Movie.services";
+import { createServiceFavs } from "@/core/movies/services/favs/Fav.service";
+import { createServiceMovies } from "@/core/movies/services/movies/Movie.services";
 import { Providers } from "@/store/providers";
 import { ServiceContextProvider } from "@/store/repository/movies.context";
 

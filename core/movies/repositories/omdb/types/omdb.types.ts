@@ -1,3 +1,6 @@
+import { Search, SearchById } from "@/core/movies/domain/contract/MovieRepository";
+import { MovieDetail, MovieList } from "@/core/movies/domain/Movie";
+
 export interface MovieOMBD {
   Title: string;
   Year: string;
@@ -43,4 +46,9 @@ export interface MovieDetailOMBD {
   Production: string;
   Website: string;
   Response: string;
+}
+
+export interface IMovieRepositoryOMDB {
+  getMovies: ({ title, type, page }: Search) => Promise<MovieList>;
+  getMovie: ({ id }: SearchById) => Promise<MovieDetail>;
 }
