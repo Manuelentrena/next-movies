@@ -32,7 +32,7 @@ const formSchema = z
   })
   .refine((data) => data.type === TypesMovie.FAVS || data.title.length > 3, {
     path: ["title"],
-    message: "Title must be at least 3 characters unless type is FAVS.",
+    message: "3 characters unless type is FAVS.",
   });
 
 interface SearchProps {
@@ -75,7 +75,7 @@ export function SearchForm({ getMovies, getFavs }: SearchProps) {
             control={form.control}
             name="title"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="relative">
                 <FormControl>
                   <Input
                     placeholder="title"
@@ -83,8 +83,7 @@ export function SearchForm({ getMovies, getFavs }: SearchProps) {
                     className="mb-2 border-4 border-primary bg-white text-lg shadow-none md:mb-0"
                   />
                 </FormControl>
-
-                <FormMessage className="text-lg" />
+                <FormMessage className="md: top-8 text-lg md:absolute md:h-0" />
               </FormItem>
             )}
           />
@@ -110,11 +109,11 @@ export function SearchForm({ getMovies, getFavs }: SearchProps) {
                     </SelectContent>
                   </Select>
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-lg md:h-1" />
               </FormItem>
             )}
           />
-          <Button type="submit" size="icon" className="w-full md:h-10 md:w-10">
+          <Button type="submit" size="icon" className="w-full md:mb-0 md:h-10 md:w-10">
             <SearchIcon className="h-4 w-4" />
             <span className="sr-only">Buscar películas</span>
           </Button>
