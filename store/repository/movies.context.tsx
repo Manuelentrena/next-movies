@@ -33,8 +33,7 @@ export const ServiceContextProvider = ({
       if (type === TypesMovie.FAVS) {
         const favsList = serviceFAVS.getFavs({ title: title });
         if (favsList === null) return null;
-        const favsListDetails = await syncDetails(favsList);
-        dispatch(setMovies(favsListDetails));
+        dispatch(setMovies(favsList));
         dispatch(setTotal(favsList.length));
       }
       if (type !== TypesMovie.FAVS) {
