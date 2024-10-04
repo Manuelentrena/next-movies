@@ -6,13 +6,14 @@ import { useAppDispatch } from "@/store/hooks";
 import { setMovies, setTotal } from "@/store/movies/movies.slice";
 import { setSearchParams } from "@/store/search/search.slice";
 import { useSearchParams } from "next/navigation";
-import { createContext, useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export interface ServiceContextState {
   serviceAPI: MovieRepository;
   serviceFAVS: FavsRepository;
   syncFavs(movies: MovieDetail[]): MovieDetail[];
   syncDetails(movies: Movie[]): Promise<MovieDetail[]>;
+  isInitialLoad: boolean;
 }
 
 export const ServiceContext = createContext({} as ServiceContextState);
@@ -22,6 +23,7 @@ export const ServiceContextProvider = ({
   serviceAPI,
   serviceFAVS,
 }: React.PropsWithChildren<{ serviceAPI: MovieRepository; serviceFAVS: FavsRepository }>) => {
+  const [isInitialLoad, setIsInitialLoad] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
 
@@ -37,12 +39,15 @@ export const ServiceContextProvider = ({
         dispatch(setTotal(favsList.length));
       }
       if (type !== TypesMovie.FAVS) {
+        setIsInitialLoad(true);
         const moviesList = await serviceAPI.getMovies({
           title: title,
           type: type,
           page: PAGE_BY_DEFAULT,
         });
-        const moviesWithDetails = await syncDetails(moviesList.Movies);
+        const moviesWithDetails = await syncDetails(moviesList.Movies).finally(() => {
+          setIsInitialLoad(false);
+        });
         dispatch(setMovies(syncFavs(moviesWithDetails)));
         dispatch(setTotal(Number(moviesList.Total)));
       }
@@ -76,6 +81,7 @@ export const ServiceContextProvider = ({
         serviceFAVS,
         syncFavs,
         syncDetails,
+        isInitialLoad,
       }}
     >
       {children}

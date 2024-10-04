@@ -8,7 +8,7 @@ import { incrementPage, setSearchParams } from "@/store/search/search.slice";
 import { useCallback, useContext } from "react";
 
 export const useMovies = () => {
-  const { serviceAPI, serviceFAVS, syncFavs, syncDetails } = useContext(ServiceContext);
+  const { serviceAPI, serviceFAVS, syncFavs, syncDetails, isInitialLoad } = useContext(ServiceContext);
   const dispatch = useAppDispatch();
   const searchState = useAppSelector((state) => state.searchReducer);
   const moviesState = useAppSelector((state) => state.moviesReducer);
@@ -95,5 +95,6 @@ export const useMovies = () => {
     toggleFav,
     moviesState,
     searchState,
+    isInitialLoad,
   };
 };
