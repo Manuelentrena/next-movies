@@ -1,27 +1,46 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { Movie } from "@/core/movies/domain/Movie";
+import { MovieDetail } from "@/core/movies/domain/Movie";
 import { useMovies } from "@/hooks/useMovies";
 import { cn } from "@/utils/utils";
 import { Star } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { memo } from "react";
+import { ScoreMarket } from "./ScoreMarket";
 
-interface MovieCardProps extends Movie {
+interface MovieCardProps extends MovieDetail {
   index: number;
   hovered: number | null;
   setHovered: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 const MovieCard: React.FC<MovieCardProps> = memo(
-  ({ Title, Year, Type, Poster, hovered, index, setHovered, Id, Fav }) => {
+  ({
+    Title,
+    Year,
+    Type,
+    Poster,
+    hovered,
+    index,
+    setHovered,
+    Id,
+    Fav,
+    Rated,
+    Released,
+    Runtime,
+    Genre,
+    Director,
+    Score,
+    Plot,
+  }) => {
     const router = useRouter();
     const { toggleFav } = useMovies();
+    const ScoreClean = Score === null ? "N/A" : Number(Score);
 
     const handleStarClick = (event: React.MouseEvent) => {
       event.stopPropagation();
-      const movie = { Year, Type, Poster, Id, Fav, Title };
+      const movie = { Year, Type, Poster, Id, Fav, Title, Rated, Released, Runtime, Genre, Director, Score, Plot };
       toggleFav({ movie });
     };
 
@@ -50,6 +69,9 @@ const MovieCard: React.FC<MovieCardProps> = memo(
             className="absolute inset-0 h-full w-full object-cover"
           />
         )}
+
+        {/* Score Marker */}
+        <ScoreMarket id={Id} score={ScoreClean} size={35} />
 
         {/* Star */}
         <div className="absolute right-2 top-2 z-10 cursor-pointer" onClick={handleStarClick}>
