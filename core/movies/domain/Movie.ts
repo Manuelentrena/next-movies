@@ -37,7 +37,7 @@ export type MovieDetail = {
 };
 
 export type MoviesStore = {
-  movies: Movie[];
+  movies: MovieDetail[];
   total: number;
   movieDetail: MovieDetail;
 };
