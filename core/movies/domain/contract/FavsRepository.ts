@@ -1,8 +1,8 @@
-import { Movie } from "@/core/movies/domain/Movie";
+import { MovieDetail } from "@/core/movies/domain/Movie";
 
 export interface FavsRepository {
-  getFavs({ title }: { title: string }): Movie[] | null;
-  getFav(id: string): Movie | null;
-  addFav(movie: Movie): void;
+  getFavs({ title }: { title: string }): MovieDetail[] | null;
+  getFav(id: string): MovieDetail | null;
+  addFav(movie: MovieDetail): void;
   removeFav(id: string): void;
 }

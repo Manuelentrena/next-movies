@@ -1,5 +1,5 @@
 import { FavsRepository } from "@/core/movies/domain/contract/FavsRepository";
-import { Movie } from "@/core/movies/domain/Movie";
+import { MovieDetail } from "@/core/movies/domain/Movie";
 
 export function createRepositoryFavsLocalStorage(): FavsRepository {
   return {
@@ -10,7 +10,7 @@ export function createRepositoryFavsLocalStorage(): FavsRepository {
   };
 }
 
-function getFavs({ title }: { title: string }): Movie[] | null {
+function getFavs({ title }: { title: string }): MovieDetail[] | null {
   const favs = getFavsFromLocalStorage();
 
   if (!favs.size) {
@@ -21,14 +21,14 @@ function getFavs({ title }: { title: string }): Movie[] | null {
     return Array.from(favs.values());
   }
 
-  const filteredFavs = Array.from(favs.values()).filter((movie: Movie) =>
+  const filteredFavs = Array.from(favs.values()).filter((movie: MovieDetail) =>
     movie.Title.toLowerCase().includes(title.toLowerCase()),
   );
 
   return filteredFavs.length > 0 ? filteredFavs : null;
 }
 
-function addFav(fav: Movie) {
+function addFav(fav: MovieDetail) {
   const favs = getFavsFromLocalStorage();
 
   favs.set(fav.Id, fav);
@@ -55,12 +55,12 @@ function removeFav(id: string) {
   }
 }
 
-function getFavsFromLocalStorage(): Map<string, Movie> {
+function getFavsFromLocalStorage(): Map<string, MovieDetail> {
   const favs = localStorage.getItem("favs");
 
   if (favs === null) {
     return new Map();
   }
 
-  return new Map(JSON.parse(favs) as Iterable<[string, Movie]>);
+  return new Map(JSON.parse(favs) as Iterable<[string, MovieDetail]>);
 }

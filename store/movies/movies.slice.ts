@@ -1,8 +1,8 @@
-import { Movie, MovieDetail, MoviesStore } from "@/core/movies/domain/Movie";
+import { MovieDetail, MoviesStore } from "@/core/movies/domain/Movie";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: MoviesStore = {
-  movies: [] as Movie[],
+  movies: [] as MovieDetail[],
   total: 0,
   movieDetail: {} as MovieDetail,
 };
@@ -11,10 +11,10 @@ export const moviesSlice = createSlice({
   name: "movies",
   initialState,
   reducers: {
-    setMovies: (state, action: PayloadAction<Movie[]>) => {
+    setMovies: (state, action: PayloadAction<MovieDetail[]>) => {
       state.movies = action.payload;
     },
-    setNextMovies: (state, action: PayloadAction<Movie[]>) => {
+    setNextMovies: (state, action: PayloadAction<MovieDetail[]>) => {
       state.movies = state.movies.concat(action.payload);
     },
     setTotal: (state, action: PayloadAction<number>) => {
