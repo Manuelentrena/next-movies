@@ -27,6 +27,13 @@ const MovieDetail: FC<MovieDetailProps> = ({ params }) => {
       Id: movieDetail.Id,
       Fav: movieDetail.Fav,
       Title: movieDetail.Title,
+      Rated: movieDetail.Rated,
+      Released: movieDetail.Released,
+      Runtime: movieDetail.Runtime,
+      Genre: movieDetail.Genre,
+      Director: movieDetail.Director,
+      Score: movieDetail.Score,
+      Plot: movieDetail.Plot,
     };
     toggleFav({ movie });
   };
