@@ -28,7 +28,7 @@ const Counter = ({ total, state }: { total: number; state: number }) => {
   return (
     <div>
       {isVisible && (
-        <div className="fixed bottom-4 left-4 rounded-lg bg-primary p-4 text-white shadow-lg">
+        <div className="fixed bottom-4 left-4 rounded-lg border-2 border-white bg-primary p-4 text-white">
           {state}/{total}
         </div>
       )}
