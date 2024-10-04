@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { MOVIE_SEARCH_BY_DEFAULT } from "@/config/initial";
+import { MOVIE_BY_DEFAULT } from "@/config/initial";
 import { Search } from "@/core/movies/domain/contract/MovieRepository";
 import { TypesMovie } from "@/core/movies/domain/Movie";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -42,7 +42,7 @@ interface SearchProps {
 
 export function SearchForm({ getMovies, getFavs }: SearchProps) {
   const searchParams = useSearchParams();
-  const title = searchParams.get("title") ?? MOVIE_SEARCH_BY_DEFAULT;
+  const title = searchParams.get("title") ?? MOVIE_BY_DEFAULT;
   const type = (searchParams.get("type") as TypesMovie) ?? TypesMovie.ALL;
 
   const router = useRouter();
@@ -120,9 +120,12 @@ export function SearchForm({ getMovies, getFavs }: SearchProps) {
         </form>
       </Form>
       <div className="container my-4 w-full max-w-5xl px-2 text-2xl md:px-8">
-        <p className="text-primary">
-          Resultados con: <span className="font-bold">{'"' + title + '"'}</span>
-        </p>
+        <h2 role="heading" className="text-primary">
+          Resultados con:{" "}
+          <span aria-label="search by" className="font-bold">
+            {'"' + title + '"'}
+          </span>
+        </h2>
       </div>
     </>
   );

@@ -67,6 +67,7 @@ const MovieCard: React.FC<MovieCardProps> = memo(
             src="poster_not_found.webp"
             alt={`${Title} Poster`}
             className="absolute inset-0 h-full w-full object-cover"
+            role="img"
           />
         )}
 

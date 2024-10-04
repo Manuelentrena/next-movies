@@ -8,7 +8,7 @@ import { useMovies } from "@/hooks/useMovies";
 import useObserver from "@/hooks/useObserver";
 import { useEffect, useRef, useState } from "react";
 
-export default function Page() {
+export default function HomePage() {
   const { getMovies, getMoviesNextPage, moviesState, getFavs, searchState, isInitialLoad } = useMovies();
   const [isNextPageLoad, setisNextPageLoad] = useState(false);
   const observerRef = useRef(null);
