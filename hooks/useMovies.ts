@@ -76,9 +76,13 @@ export const useMovies = () => {
     ({ title, type }: Omit<Search, "page">) => {
       try {
         const movies = serviceFAVS.getFavs({ title });
-        if (!movies) return;
-        dispatch(setMovies(movies));
-        dispatch(setTotal(Number(movies.length)));
+        if (!movies) {
+          dispatch(setMovies([]));
+          dispatch(setTotal(0));
+        } else {
+          dispatch(setMovies(movies));
+          dispatch(setTotal(Number(movies.length)));
+        }
         dispatch(setSearchParams({ title, type }));
       } catch (error) {
         handleMoviesError(error as Error);
