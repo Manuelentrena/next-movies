@@ -1,5 +1,5 @@
 import HomePage from "@/app/(home)/page";
-import { PAGE_BY_DEFAULT } from "@/config/initial";
+import { Search } from "@/core/movies/domain/contract/MovieRepository";
 import { TypesMovie } from "@/core/movies/domain/Movie";
 import { createRepositoryFavsLocalStorage } from "@/core/movies/repositories/localstorage/localstorage.repository";
 import { IFavsRepositoryLocalStorage } from "@/core/movies/repositories/localstorage/types/localstorage.types";
@@ -14,27 +14,12 @@ import { IMovieService } from "@/core/movies/services/movies/types/movies.types"
 import { Providers } from "@/store/providers";
 import { ServiceContextProvider } from "@/store/repository/movies.context";
 import { act, render, screen, waitFor } from "@testing-library/react";
-
-let title: string;
-let type: TypesMovie;
-let page: number;
+import { setSearchParams } from "../jest.setup";
 
 let repositoryMoviesOMDB: IMovieRepositoryOMDB;
 let serviceMoviesOMDB: IMovieService;
 let repositoryFavsLocalStorage: IFavsRepositoryLocalStorage;
 let serviceFavsLocalStorage: IFavService;
-
-/* URL input parameters by Mock */
-jest.mock("next/navigation", () => ({
-  useSearchParams: () => ({
-    get: (key: string) => {
-      if (key === "title") return title;
-      if (key === "type") return type;
-      return null;
-    },
-  }),
-  useRouter: jest.fn(),
-}));
 
 describe("Initial Load of App", () => {
   beforeAll(() => {});
@@ -44,15 +29,20 @@ describe("Initial Load of App", () => {
     serviceMoviesOMDB = createServiceMovies(repositoryMoviesOMDB);
     repositoryFavsLocalStorage = createRepositoryFavsLocalStorage();
     serviceFavsLocalStorage = createServiceFavs(repositoryFavsLocalStorage);
+    repositoryMoviesOMDB.getMovies = jest.fn().mockImplementation(({ title, type, page }: Search) => {
+      return getMoviesMockOMDB({ title, type, page });
+    });
+    repositoryMoviesOMDB.getMovie = jest.fn().mockImplementation(({ id }) => {
+      return getMovieMockOMDB({ id });
+    });
   });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  test("Checked that the URLQuery title is rendered in the container.", async () => {
-    title = "batman";
-    type = TypesMovie.FAVS;
+  test("👀 Checked that the URLQuery title is rendered in the container.", async () => {
+    setSearchParams("batman", TypesMovie.FAVS);
 
     await act(async () => {
       render(
@@ -68,15 +58,8 @@ describe("Initial Load of App", () => {
     expect(headingElement).toBeInTheDocument();
   });
 
-  test("Checked that the Numbers of calls are optimal", async () => {
-    title = "batman";
-    type = TypesMovie.ALL;
-    page = PAGE_BY_DEFAULT;
-
-    repositoryMoviesOMDB.getMovies = jest.fn().mockResolvedValue(getMoviesMockOMDB({ title, type, page }));
-    repositoryMoviesOMDB.getMovie = jest.fn().mockImplementation(({ id }) => {
-      return getMovieMockOMDB({ id });
-    });
+  test("⚡ Checked that the Numbers of calls are optimal with type series", async () => {
+    setSearchParams("batman", TypesMovie.SERIES);
 
     await act(async () => {
       render(
@@ -90,9 +73,39 @@ describe("Initial Load of App", () => {
 
     await waitFor(() => {
       expect(repositoryMoviesOMDB.getMovies).toHaveBeenCalledWith({
-        title: title,
-        type: type,
-        page: page,
+        title: "batman",
+        type: TypesMovie.SERIES,
+        page: 1,
+      });
+    });
+
+    await waitFor(() => {
+      expect(repositoryMoviesOMDB.getMovies).toHaveBeenCalledTimes(1);
+    });
+
+    await waitFor(() => {
+      expect(repositoryMoviesOMDB.getMovie).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  test("⚡ Checked that the Numbers of calls are optimal with type all", async () => {
+    setSearchParams("batman", TypesMovie.ALL);
+
+    await act(async () => {
+      render(
+        <Providers>
+          <ServiceContextProvider serviceAPI={serviceMoviesOMDB} serviceFAVS={serviceFavsLocalStorage}>
+            <HomePage />
+          </ServiceContextProvider>
+        </Providers>,
+      );
+    });
+
+    await waitFor(() => {
+      expect(repositoryMoviesOMDB.getMovies).toHaveBeenCalledWith({
+        title: "batman",
+        type: TypesMovie.ALL,
+        page: 1,
       });
     });
 
@@ -105,15 +118,8 @@ describe("Initial Load of App", () => {
     });
   });
 
-  test("Checked the movies are rendered", async () => {
-    title = "batman";
-    type = TypesMovie.ALL;
-    page = PAGE_BY_DEFAULT;
-
-    repositoryMoviesOMDB.getMovies = jest.fn().mockResolvedValue(getMoviesMockOMDB({ title, type, page }));
-    repositoryMoviesOMDB.getMovie = jest.fn().mockImplementation(({ id }) => {
-      return getMovieMockOMDB({ id });
-    });
+  test("🎨 Checked all the movies are rendered with type all", async () => {
+    setSearchParams("batman", TypesMovie.ALL);
 
     await act(async () => {
       render(
@@ -130,8 +136,31 @@ describe("Initial Load of App", () => {
       expect(imgElement1).toBeInTheDocument();
       const imgElement2 = screen.getByRole("img", { name: "Batman Begins Poster" });
       expect(imgElement2).toBeInTheDocument();
-      const imgElement3 = screen.getByRole("img", { name: "Batman v Superman: Dawn of Justice Poster" });
+      const imgElement3 = screen.getByRole("img", { name: "Batman: The Animated Series Poster" });
       expect(imgElement3).toBeInTheDocument();
+    });
+  });
+
+  test("🎨 Checked only the movies with type movies are rendered", async () => {
+    setSearchParams("batman", TypesMovie.MOVIE);
+
+    await act(async () => {
+      render(
+        <Providers>
+          <ServiceContextProvider serviceAPI={serviceMoviesOMDB} serviceFAVS={serviceFavsLocalStorage}>
+            <HomePage />
+          </ServiceContextProvider>
+        </Providers>,
+      );
+    });
+
+    await waitFor(() => {
+      const imgElement1 = screen.getByRole("img", { name: "The Batman Poster" });
+      expect(imgElement1).toBeInTheDocument();
+      const imgElement2 = screen.getByRole("img", { name: "Batman Begins Poster" });
+      expect(imgElement2).toBeInTheDocument();
+      const imgElement3 = screen.queryByRole("img", { name: "Batman: The Animated Series Poster" });
+      expect(imgElement3).not.toBeInTheDocument();
     });
   });
 });
