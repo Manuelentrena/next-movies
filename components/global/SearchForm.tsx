@@ -79,6 +79,7 @@ export function SearchForm({ getMovies, getFavs }: SearchProps) {
                 <FormControl>
                   <Input
                     placeholder="title"
+                    role="search"
                     {...field}
                     className="mb-2 border-4 border-primary bg-white text-lg shadow-none md:mb-0"
                   />
@@ -101,7 +102,7 @@ export function SearchForm({ getMovies, getFavs }: SearchProps) {
                       <SelectGroup>
                         <SelectLabel>Types</SelectLabel>
                         {Object.values(TypesMovie).map((type) => (
-                          <SelectItem key={type} value={type}>
+                          <SelectItem key={type} value={type} aria-label="option">
                             {type.toLocaleUpperCase()}
                           </SelectItem>
                         ))}
@@ -109,7 +110,7 @@ export function SearchForm({ getMovies, getFavs }: SearchProps) {
                     </SelectContent>
                   </Select>
                 </FormControl>
-                <FormMessage className="text-lg md:h-1" />
+                <FormMessage className="text-lg md:h-1" aria-label="error-search" />
               </FormItem>
             )}
           />
