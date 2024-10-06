@@ -1,6 +1,8 @@
 ![Build Status](https://img.shields.io/github/actions/workflow/status/Manuelentrena/next-movies/deploy.yaml)
 ![Test Coverage](https://img.shields.io/codecov/c/github/Manuelentrena/next-movies)
 
+Esta web usa `Codecov` para los reportes [Codecov Coverage](https://app.codecov.io/gh/Manuelentrena/next-movies).
+
 # Aplicación de Búsqueda de Películas y Series
 
 ## Descripción
