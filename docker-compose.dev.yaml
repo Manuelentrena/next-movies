@@ -1,0 +1,17 @@
+services:
+  next:
+    container_name: next
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.dev
+    ports:
+      - "3000:3000"
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /app/src
+          ignore:
+            - node_modules
+        - action: rebuild
+          path: package.json

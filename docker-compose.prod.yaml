@@ -1,0 +1,8 @@
+services:
+  next:
+    container_name: next
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.prod
+    ports:
+      - "3000:3000"

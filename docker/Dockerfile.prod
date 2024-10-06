@@ -1,0 +1,38 @@
+# Etapa 1: Construcción de la aplicación
+FROM node:18-alpine AS builder
+
+# Crear directorio de trabajo
+WORKDIR /app
+
+# Copiar los archivos necesarios para instalar las dependencias
+COPY package.json package-lock.json ./
+
+# Instalar dependencias
+RUN npm ci
+
+# Copiar el resto de la aplicación
+COPY . .
+
+# Construir la aplicación Next.js
+RUN npm run build
+
+# Etapa 2: Imagen para producción
+FROM node:18-alpine AS runner
+
+WORKDIR /app
+
+# Definir variables de entorno
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+# Copiar el resultado de la build desde la fase anterior
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
+
+# Exponer el puerto de la aplicación
+EXPOSE 3000
+
+# Comando para correr la aplicación en producción
+CMD ["node", "server.js"]
