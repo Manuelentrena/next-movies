@@ -2,8 +2,8 @@ name: Build, Test, Lint and Deploy to GitHub Packages
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -56,3 +56,20 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN  }}
+
+      # 8. Get the tag and set it as output
+      - name: Set tag output
+        id: set_tag
+        run: echo "tag_name=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
+
+      # 9. Build the Docker image
+      - name: Build Docker image
+        run: |
+          TAG=${{ steps.set_tag.outputs.tag_name }}
+          docker build -t ghcr.io/${{ github.repository }}:$TAG -f docker/Dockerfile.prod .
+
+      # 10. Push the Docker image
+      - name: Push Docker image
+        run: |
+          TAG=${{ steps.set_tag.outputs.tag_name }}
+          docker push ghcr.io/${{ github.repository }}:$TAG

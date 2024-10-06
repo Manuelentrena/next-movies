@@ -1,5 +1,8 @@
 {
   "private": true,
+  "version": "1.0.0",
+  "name": "next-movies",
+  "description": "Next.js project with TypeScript, Tailwind CSS, Jest, and ESLint",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
