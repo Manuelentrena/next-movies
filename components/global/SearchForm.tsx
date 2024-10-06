@@ -17,6 +17,7 @@ import { TypesMovie } from "@/core/movies/domain/Movie";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Search as SearchIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
@@ -44,6 +45,7 @@ interface SearchProps {
 export function SearchForm({ getMovies, getFavs, setStopObserver }: SearchProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const [searchBy, setSearchBy] = useState<string>(searchParams.get("title") ?? MOVIE_BY_DEFAULT);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -59,6 +61,7 @@ export function SearchForm({ getMovies, getFavs, setStopObserver }: SearchProps)
     } else {
       getMovies({ title: title, type: type, page: 1 });
     }
+    setSearchBy(title);
     setStopObserver(false);
     router.push(`?title=${title}&type=${type}`);
   };
@@ -123,7 +126,7 @@ export function SearchForm({ getMovies, getFavs, setStopObserver }: SearchProps)
         <h2 role="heading" className="text-primary">
           Resultados con:{" "}
           <span aria-label="search by" className="font-bold">
-            {/* {'"' + title + '"'} */}
+            {'"' + searchBy + '"'}
           </span>
         </h2>
       </div>
