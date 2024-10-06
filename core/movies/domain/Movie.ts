@@ -11,7 +11,7 @@ export enum TypesMovie {
   ALL = "all",
   MOVIE = "movie",
   SERIES = "series",
-  GAMES = "game",
+  GAME = "game",
   FAVS = "favs",
 }
 

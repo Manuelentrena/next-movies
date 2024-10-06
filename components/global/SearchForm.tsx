@@ -23,7 +23,7 @@ import { Button } from "../ui/button";
 
 const formSchema = z
   .object({
-    type: z.enum([TypesMovie.ALL, TypesMovie.MOVIE, TypesMovie.SERIES, TypesMovie.GAMES, TypesMovie.FAVS], {
+    type: z.enum([TypesMovie.ALL, TypesMovie.MOVIE, TypesMovie.SERIES, TypesMovie.GAME, TypesMovie.FAVS], {
       required_error: "One type is required.",
     }),
     title: z.string({
@@ -38,20 +38,18 @@ const formSchema = z
 interface SearchProps {
   getMovies: (values: Search) => void;
   getFavs: (values: Omit<Search, "page">) => void;
+  setStopObserver: (value: boolean) => void;
 }
 
-export function SearchForm({ getMovies, getFavs }: SearchProps) {
+export function SearchForm({ getMovies, getFavs, setStopObserver }: SearchProps) {
   const searchParams = useSearchParams();
-  const title = searchParams.get("title") ?? MOVIE_BY_DEFAULT;
-  const type = (searchParams.get("type") as TypesMovie) ?? TypesMovie.ALL;
-
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: title,
-      type: type,
+      title: searchParams.get("title") ?? MOVIE_BY_DEFAULT,
+      type: (searchParams.get("type") as TypesMovie) ?? TypesMovie.ALL,
     },
   });
 
@@ -61,6 +59,7 @@ export function SearchForm({ getMovies, getFavs }: SearchProps) {
     } else {
       getMovies({ title: title, type: type, page: 1 });
     }
+    setStopObserver(false);
     router.push(`?title=${title}&type=${type}`);
   };
 
@@ -124,7 +123,7 @@ export function SearchForm({ getMovies, getFavs }: SearchProps) {
         <h2 role="heading" className="text-primary">
           Resultados con:{" "}
           <span aria-label="search by" className="font-bold">
-            {'"' + title + '"'}
+            {/* {'"' + title + '"'} */}
           </span>
         </h2>
       </div>

@@ -4,9 +4,14 @@ import { useEffect, useRef, useState } from "react";
 interface UseObserverOptions {
   distance?: string;
   externalRef?: React.RefObject<HTMLElement>;
+  shouldStop?: boolean;
 }
 
-export default function useObserver({ distance = DISTANCE_OBSERVE, externalRef }: UseObserverOptions = {}) {
+export default function useObserver({
+  distance = DISTANCE_OBSERVE,
+  externalRef,
+  shouldStop = false,
+}: UseObserverOptions = {}) {
   const [isObserver, setIsObserver] = useState<boolean>(false);
   const fromRef = useRef<HTMLElement>(null);
 
@@ -16,7 +21,7 @@ export default function useObserver({ distance = DISTANCE_OBSERVE, externalRef }
     const element = externalRef ? externalRef.current : fromRef.current;
 
     const onChange = (entries: IntersectionObserverEntry[]) => {
-      if (entries[0].isIntersecting) {
+      if (entries[0].isIntersecting && !shouldStop) {
         setIsObserver(true);
       } else {
         setIsObserver(false);
@@ -32,7 +37,7 @@ export default function useObserver({ distance = DISTANCE_OBSERVE, externalRef }
     return () => {
       if (observer) observer.disconnect();
     };
-  }, [distance, externalRef]);
+  }, [distance, externalRef, shouldStop]);
 
   return { isObserver };
 }

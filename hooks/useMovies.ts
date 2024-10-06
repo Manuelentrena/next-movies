@@ -5,13 +5,14 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setMovieDetail, setMovies, setNextMovies, setTotal, toggleFavMovie } from "@/store/movies/movies.slice";
 import { ServiceContext } from "@/store/repository/movies.context";
 import { incrementPage, setSearchParams } from "@/store/search/search.slice";
-import { useCallback, useContext } from "react";
+import { useCallback, useContext, useState } from "react";
 
 export const useMovies = () => {
   const { serviceAPI, serviceFAVS, syncFavs, syncDetails, isInitialLoad } = useContext(ServiceContext);
   const dispatch = useAppDispatch();
   const searchState = useAppSelector((state) => state.searchReducer);
   const moviesState = useAppSelector((state) => state.moviesReducer);
+  const [stopObserver, setStopObserver] = useState(false);
 
   const getMovies = useCallback(
     async ({ title, type, page }: Search) => {
@@ -40,6 +41,7 @@ export const useMovies = () => {
       dispatch(setTotal(Number(moviesList.Total)));
       dispatch(incrementPage());
     } catch (error) {
+      setStopObserver(true);
       handleMoviesError(error as Error);
     }
   }, [serviceAPI, searchState.page, searchState.title, searchState.type]);
@@ -100,5 +102,7 @@ export const useMovies = () => {
     moviesState,
     searchState,
     isInitialLoad,
+    stopObserver,
+    setStopObserver,
   };
 };

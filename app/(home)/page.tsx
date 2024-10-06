@@ -9,10 +9,20 @@ import useObserver from "@/hooks/useObserver";
 import { useEffect, useRef, useState } from "react";
 
 export default function HomePage() {
-  const { getMovies, getMoviesNextPage, moviesState, getFavs, searchState, isInitialLoad } = useMovies();
+  const {
+    getMovies,
+    getMoviesNextPage,
+    moviesState,
+    getFavs,
+    searchState,
+    isInitialLoad,
+    stopObserver,
+    setStopObserver,
+  } = useMovies();
+
   const [isNextPageLoad, setisNextPageLoad] = useState(false);
   const observerRef = useRef(null);
-  const { isObserver } = useObserver({ externalRef: observerRef });
+  const { isObserver } = useObserver({ externalRef: observerRef, shouldStop: stopObserver });
 
   useEffect(
     function () {
@@ -28,7 +38,7 @@ export default function HomePage() {
 
   return (
     <>
-      <SearchForm getMovies={getMovies} getFavs={getFavs} />
+      <SearchForm getMovies={getMovies} getFavs={getFavs} setStopObserver={setStopObserver} />
       <MoviesContainer movies={moviesState.movies} isNextPageLoad={isNextPageLoad} isInitialLoad={isInitialLoad} />
       <ScrollToTopButton />
       <Counter total={moviesState.total} state={moviesState.movies.length} />
