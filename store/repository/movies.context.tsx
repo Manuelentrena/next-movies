@@ -34,9 +34,13 @@ export const ServiceContextProvider = ({
     const initLoading = async () => {
       if (type === TypesMovie.FAVS) {
         const favsList = serviceFAVS.getFavs({ title: title });
-        if (favsList === null) return null;
-        dispatch(setMovies(favsList));
-        dispatch(setTotal(favsList.length));
+        if (favsList === null) {
+          dispatch(setMovies([]));
+          dispatch(setTotal(0));
+        } else {
+          dispatch(setMovies(favsList));
+          dispatch(setTotal(favsList.length));
+        }
       }
       if (type !== TypesMovie.FAVS) {
         setIsInitialLoad(true);
