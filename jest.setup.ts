@@ -1,5 +1,6 @@
 // Learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
+import { TypesMovie } from "./core/movies/domain/Movie";
 
 // Mock IntersectionObserver
 global.IntersectionObserver = jest.fn(() => ({
@@ -14,7 +15,7 @@ let type = "all";
 jest.mock("next/navigation", () => {
   return {
     useSearchParams: () => ({
-      get: (key) => {
+      get: (key: string) => {
         if (key === "title") return title;
         if (key === "type") return type;
         return null;
@@ -27,9 +28,7 @@ jest.mock("next/navigation", () => {
 });
 
 // Exportar funciones para manipular los valores en los tests
-const setSearchParams = (newTitle, newType) => {
+export const setSearchParams = (newTitle: string, newType: TypesMovie) => {
   title = newTitle;
   type = newType;
 };
-
-module.exports = { setSearchParams };
