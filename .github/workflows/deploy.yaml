@@ -5,6 +5,10 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  packages: write
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -55,7 +59,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN  }}
+          password: ${{ secrets.REGISTRY_TOKEN  }}
 
       # 8. Get the tag and set it as output
       - name: Set tag output
