@@ -4,7 +4,7 @@ import { getCurrentYear } from "@/utils/utils";
 import { Instagram } from "lucide-react";
 import Link from "next/link";
 
-export default function Footer() {
+export function Footer() {
   return (
     <footer className="dark:border-gray-850 w-full border-t border-gray-200 bg-gray-100 dark:bg-primary">
       <div className="container flex max-w-5xl flex-col-reverse items-center justify-between px-8 py-8 md:flex-row md:px-6">
@@ -13,12 +13,7 @@ export default function Footer() {
             © {getCurrentYear()} Creado por Manuel Entrena
           </p>
           <div className="mx-auto mt-4 block md:mx-0 md:ml-2 md:mt-0" style={{ color: "white" }}>
-            <a
-              href="https://www.instagram.com/manuel_entrena/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cursor-pointer"
-            >
+            <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
               <LogoMe />
             </a>
           </div>
