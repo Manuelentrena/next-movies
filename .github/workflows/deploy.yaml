@@ -78,11 +78,15 @@ jobs:
           TAG=${{ steps.set_tag.outputs.tag_name }}
           docker push ghcr.io/manuelentrena/next-movies:$TAG
 
-      # 11. Generate Changelog
+      # 11. Install auto-changelog globally
+      - name: Install auto-changelog
+        run: npm install -g auto-changelog
+
+      # 12. Generate Changelog
       - name: Generate Changelog
         run: auto-changelog --commit-limit false -o CHANGELOG.md
 
-      # 12. Release
+      # 13. Release
       - name: Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
