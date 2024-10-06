@@ -25,6 +25,10 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: npm ci  
+
       # 3. Run Lint
       - name: Run Lint
         run: npm run lint
