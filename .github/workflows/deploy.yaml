@@ -7,7 +7,7 @@ on:
 
 permissions:
   packages: write
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -78,6 +78,15 @@ jobs:
           TAG=${{ steps.set_tag.outputs.tag_name }}
           docker push ghcr.io/manuelentrena/next-movies:$TAG
 
-      # 11. Create Release
-      # - name: Create Release
-      #   uses: softprops/action-gh-release@v2
+      # 11. Generate Changelog
+      - name: Generate Changelog
+        run: auto-changelog --commit-limit false -o CHANGELOG.md
+
+      # 12. Release
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          body_path: ${{ github.workspace }}/CHANGELOG.md
+          repository: manuelentrena/next-movies
+          token: ${{ secrets.REGISTRY_TOKEN }}
