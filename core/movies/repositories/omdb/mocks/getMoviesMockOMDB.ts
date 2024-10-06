@@ -33,7 +33,7 @@ export const getMoviesMockOMDB = async ({ title, type, page }: Search): Promise<
   if (title === "batman" && type === TypesMovie.ALL && page === 1) {
     const Movies = {
       Search: [movie1, movie2, movie3],
-      totalResults: "575",
+      totalResults: "3",
       Response: "True",
     };
     return adapterMoviesListOMDB(Movies);
@@ -42,7 +42,7 @@ export const getMoviesMockOMDB = async ({ title, type, page }: Search): Promise<
   if (title === "batman" && type === TypesMovie.MOVIE && page === 1) {
     const Movies = {
       Search: [movie1, movie2],
-      totalResults: "575",
+      totalResults: "2",
       Response: "True",
     };
     return adapterMoviesListOMDB(Movies);
@@ -51,7 +51,25 @@ export const getMoviesMockOMDB = async ({ title, type, page }: Search): Promise<
   if (title === "batman" && type === TypesMovie.SERIES && page === 1) {
     const Movies = {
       Search: [movie3],
-      totalResults: "575",
+      totalResults: "2",
+      Response: "True",
+    };
+    return adapterMoviesListOMDB(Movies);
+  }
+
+  if (title === "The Batman" && type === TypesMovie.MOVIE && page === 1) {
+    const Movies = {
+      Search: [movie2],
+      totalResults: "1",
+      Response: "True",
+    };
+    return adapterMoviesListOMDB(Movies);
+  }
+
+  if (title === "The Batman" && type === TypesMovie.ALL && page === 1) {
+    const Movies = {
+      Search: [movie2, movie3],
+      totalResults: "2",
       Response: "True",
     };
     return adapterMoviesListOMDB(Movies);
