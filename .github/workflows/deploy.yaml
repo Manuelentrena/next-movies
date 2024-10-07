@@ -1,4 +1,4 @@
-name: Build, Test, Lint and Deploy to GitHub Packages
+name: Next-Movies
 
 on:
   push:

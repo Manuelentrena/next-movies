@@ -1,13 +1,17 @@
-![Build Status](https://img.shields.io/github/actions/workflow/status/Manuelentrena/next-movies/deploy.yaml)
-![Test Coverage](https://img.shields.io/codecov/c/github/Manuelentrena/next-movies)
+<p align="center"><img src="https://raw.githubusercontent.com/Manuelentrena/next-movies/refs/heads/main/public/ticket.webp" width="200" alt="Next Movies Logo"></p>
 
-Esta web usa `Codecov` para los reportes [Codecov Coverage](https://app.codecov.io/gh/Manuelentrena/next-movies).
+<p align="center">
+<a href="https://github.com/Manuelentrena/next-movies/actions"><img src="https://github.com/Manuelentrena/next-movies/actions/workflows/deploy.yaml/badge.svg" alt="Build Status"></a>
+<a href="https://app.codecov.io/gh/Manuelentrena/next-movies"><img src="https://img.shields.io/codecov/c/github/Manuelentrena/next-movies" alt="Test Coverage"></a>
+</p>
 
-# Aplicación de Búsqueda de Películas y Series
+# Next Movies
 
 ## Descripción
 
 Esta aplicación permite a los usuarios buscar películas y series a través de una interfaz intuitiva, visualizar los resultados, obtener detalles de cada película o serie, y gestionar una lista de favoritos. Los favoritos se administran utilizando **Global State**, asegurando que la información persista incluso al recargar la página.
+
+<p align="center"><img src="https://res.cloudinary.com/manuelentrena/image/upload/v1728259665/Next-Movie/2024-10-07_02h07_34_lkrupl.png" width="800" alt="Next Movies Mobile"></p>
 
 ## Funcionalidades
 
@@ -88,7 +92,14 @@ docker-compose -f docker/docker-compose.dev.yaml up
    npm install
    ```
 
-4. Levanta la aplicación (opcional si no usas Docker):
+4. Configuración del Archivo `.env`
+
+   ```
+   NEXT_PUBLIC_BASE_URL="https://www.omdbapi.com/?apikey="
+   NEXT_PUBLIC_API_KEY="YOUR-API-KEY"
+   ```
+
+5. Levanta la aplicación (opcional si no usas Docker):
    ```bash
    npm run dev
    ```
