@@ -66,11 +66,13 @@ A continuación, se describen los comandos disponibles para gestionar el proyect
 
 ## Requisitos para Docker
 
-Para ejecutar la aplicación utilizando Docker, asegúrate de tener Docker y Docker Compose instalados en tu máquina. Luego, puedes levantar el proyecto utilizando el siguiente comando:
+Para ejecutar la aplicación utilizando Docker, asegúrate de tener Docker y Docker Compose instalados en tu máquina. Luego, puedes levantar el proyecto utilizando el siguiente comando (Puerto 3000):
 
 ```bash
-docker-compose -f docker/docker-compose.dev.yaml up
+docker-compose -f docker-compose.dev.yaml up -d
 ```
+
+Antes tienes que configurar el archivo .env
 
 ## Instalación
 
@@ -99,7 +101,7 @@ docker-compose -f docker/docker-compose.dev.yaml up
    NEXT_PUBLIC_API_KEY="YOUR-API-KEY"
    ```
 
-5. Levanta la aplicación (opcional si no usas Docker):
+5. Levanta la aplicación (opcional si usas Docker):
    ```bash
    npm run dev
    ```
