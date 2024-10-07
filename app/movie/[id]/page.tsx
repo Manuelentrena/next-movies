@@ -20,22 +20,7 @@ const MovieDetail: FC<MovieDetailProps> = ({ params }) => {
   const { movieDetail, toggleFav, isLoading } = useMovieDetail({ params });
 
   const handleStarClick = () => {
-    const movie = {
-      Year: movieDetail.Year,
-      Type: movieDetail.Type,
-      Poster: movieDetail.Poster,
-      Id: movieDetail.Id,
-      Fav: movieDetail.Fav,
-      Title: movieDetail.Title,
-      Rated: movieDetail.Rated,
-      Released: movieDetail.Released,
-      Runtime: movieDetail.Runtime,
-      Genre: movieDetail.Genre,
-      Director: movieDetail.Director,
-      Score: movieDetail.Score,
-      Plot: movieDetail.Plot,
-    };
-    toggleFav({ movie });
+    toggleFav({ movie: movieDetail });
   };
 
   if (isLoading || (movieDetail && Object.keys(movieDetail).length === 0)) {
