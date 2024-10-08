@@ -1,14 +1,5 @@
-import { MovieDetail, MovieList, TypesMovie } from "@/core/movies/domain/Movie";
-
-export interface Search {
-  title: string;
-  type: TypesMovie;
-  page: number;
-}
-
-export interface SearchById {
-  id: string;
-}
+import { MovieDetail, MovieList } from "@/core/movies/domain/Movie";
+import { Search, SearchById } from "@/core/movies/domain/Search";
 
 export interface MovieRepository {
   getMovies({ title, type, page }: Search): Promise<MovieList>;

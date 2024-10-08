@@ -12,29 +12,21 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { MOVIE_BY_DEFAULT } from "@/config/initial";
-import { Search } from "@/core/movies/domain/contract/MovieRepository";
 import { TypesMovie } from "@/core/movies/domain/Movie";
+import { Search, SearchSchema } from "@/core/movies/domain/Search";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Search as SearchIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "../ui/button";
+import { Button } from "../../../components/ui/button";
 
-const formSchema = z
-  .object({
-    type: z.enum([TypesMovie.ALL, TypesMovie.MOVIE, TypesMovie.SERIES, TypesMovie.GAME, TypesMovie.FAVS], {
-      required_error: "One type is required.",
-    }),
-    title: z.string({
-      required_error: "Title is required.",
-    }),
-  })
-  .refine((data) => data.type === TypesMovie.FAVS || data.title.length > 3, {
-    path: ["title"],
-    message: "3 characters unless type is FAVS.",
-  });
+export const SearchFormSchema = SearchSchema.extend({
+  page: z.number().positive().optional(),
+}).refine((data) => data.type === TypesMovie.FAVS || data.title.length > 3, {
+  path: ["title"],
+  message: "3 characters unless type is FAVS.",
+});
 
 interface SearchProps {
   getMovies: (values: Search) => void;
@@ -45,23 +37,20 @@ interface SearchProps {
 export function SearchForm({ getMovies, getFavs, setStopObserver }: SearchProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [searchBy, setSearchBy] = useState<string>(searchParams.get("title") ?? MOVIE_BY_DEFAULT);
+  const title = (searchParams as URLSearchParams | null)?.get("title") ?? MOVIE_BY_DEFAULT;
+  const type = ((searchParams as URLSearchParams | null)?.get("type") as TypesMovie) ?? TypesMovie.ALL;
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: searchParams.get("title") ?? MOVIE_BY_DEFAULT,
-      type: (searchParams.get("type") as TypesMovie) ?? TypesMovie.ALL,
-    },
+  const form = useForm<z.infer<typeof SearchFormSchema>>({
+    resolver: zodResolver(SearchFormSchema),
+    defaultValues: { title: title, type: type },
   });
 
-  const onSubmit = ({ title, type }: z.infer<typeof formSchema>) => {
+  const onSubmit = ({ title, type }: z.infer<typeof SearchFormSchema>) => {
     if (type === TypesMovie.FAVS) {
       getFavs({ title: title, type: type });
     } else {
       getMovies({ title: title, type: type, page: 1 });
     }
-    setSearchBy(title);
     setStopObserver(false);
     router.push(`?title=${title}&type=${type}`);
   };
@@ -86,7 +75,7 @@ export function SearchForm({ getMovies, getFavs, setStopObserver }: SearchProps)
                     className="mb-2 border-4 border-primary bg-white text-lg shadow-none md:mb-0"
                   />
                 </FormControl>
-                <FormMessage className="md: top-8 text-lg md:absolute md:h-0" />
+                <FormMessage aria-label="error-search-title" className="md: top-8 text-lg md:absolute md:h-0" />
               </FormItem>
             )}
           />
@@ -112,7 +101,7 @@ export function SearchForm({ getMovies, getFavs, setStopObserver }: SearchProps)
                     </SelectContent>
                   </Select>
                 </FormControl>
-                <FormMessage className="text-lg md:h-1" aria-label="error-search" />
+                <FormMessage data-testid="message-error-select" className="text-lg md:h-1" aria-label="error-search" />
               </FormItem>
             )}
           />
@@ -122,14 +111,6 @@ export function SearchForm({ getMovies, getFavs, setStopObserver }: SearchProps)
           </Button>
         </form>
       </Form>
-      <div className="container my-4 w-full max-w-5xl px-2 text-2xl md:px-8">
-        <h2 role="heading" className="text-primary">
-          Resultados con:{" "}
-          <span aria-label="search by" className="font-bold">
-            {'"' + searchBy + '"'}
-          </span>
-        </h2>
-      </div>
     </>
   );
 }

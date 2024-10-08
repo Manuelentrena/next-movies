@@ -1,6 +1,6 @@
 import { MOVIE_BY_DEFAULT, PAGE_BY_DEFAULT, TYPE_BY_DEFAULT } from "@/config/initial";
-import { Search } from "@/core/movies/domain/contract/MovieRepository";
 import { TypesMovie } from "@/core/movies/domain/Movie";
+import { Search } from "@/core/movies/domain/Search";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: Search = {
