@@ -1,8 +1,7 @@
 "use client";
 
-import { Counter, MoviesContainer } from "@/app/(home)/_components";
+import { Breadcrumb, Counter, MoviesContainer, SearchForm } from "@/app/(home)/_components";
 import ScrollToTopButton from "@/components/global/ScrollToTopButton";
-import { SearchForm } from "@/components/global/SearchForm";
 import { TypesMovie } from "@/core/movies/domain/Movie";
 import { useMovies } from "@/hooks/useMovies";
 import useObserver from "@/hooks/useObserver";
@@ -38,6 +37,7 @@ export default function HomePage() {
 
   return (
     <>
+      <Breadcrumb title={searchState.title} />
       <SearchForm getMovies={getMovies} getFavs={getFavs} setStopObserver={setStopObserver} />
       <MoviesContainer movies={moviesState.movies} isNextPageLoad={isNextPageLoad} isInitialLoad={isInitialLoad} />
       <ScrollToTopButton />
