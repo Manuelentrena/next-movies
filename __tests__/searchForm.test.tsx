@@ -1,6 +1,6 @@
 import HomePage from "@/app/(home)/page";
-import { Search } from "@/core/movies/domain/contract/MovieRepository";
 import { TypesMovie } from "@/core/movies/domain/Movie";
+import { Search } from "@/core/movies/domain/Search";
 import { createRepositoryFavsLocalStorage } from "@/core/movies/repositories/localstorage/localstorage.repository";
 import { IFavsRepositoryLocalStorage } from "@/core/movies/repositories/localstorage/types/localstorage.types";
 import { getMovieMockOMDB } from "@/core/movies/repositories/omdb/mocks/getMovieMockOMDB";
@@ -66,12 +66,12 @@ describe("searchForm", () => {
     const submitButton = screen.getByText(/Buscar películas/i);
     expect(submitButton).toBeInTheDocument();
 
-    let errorText = screen.queryByText(/3 characters unless type is FAVS/i);
+    let errorText = screen.queryByLabelText("error-search-title");
     expect(errorText).not.toBeInTheDocument();
 
     await userEvent.click(submitButton);
 
-    errorText = screen.getByText(/3 characters unless type is FAVS/i);
+    errorText = screen.queryByLabelText("error-search-title");
     expect(errorText).toBeInTheDocument();
   });
 
@@ -98,14 +98,14 @@ describe("searchForm", () => {
     const submitButton = screen.getByText(/Buscar películas/i);
     expect(submitButton).toBeInTheDocument();
 
-    let errorText = screen.queryByText(/3 characters unless type is FAVS/i);
+    let errorText = screen.queryByLabelText("error-search-title");
     expect(errorText).not.toBeInTheDocument();
 
     await act(async () => {
       userEvent.click(submitButton);
     });
 
-    errorText = screen.queryByText(/3 characters unless type is FAVS/i);
+    errorText = screen.queryByLabelText("error-search-title");
     expect(errorText).not.toBeInTheDocument();
   });
 
