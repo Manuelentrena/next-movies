@@ -15,6 +15,7 @@ import { Providers } from "@/store/providers";
 import { ServiceContextProvider } from "@/store/repository/movies.context";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { setSearchParams } from "../jest.setup";
+import { SearchMother } from "./core/movies/domain/SearchMother";
 
 let repositoryMoviesOMDB: IMovieRepositoryOMDB;
 let serviceMoviesOMDB: IMovieService;
@@ -42,7 +43,8 @@ describe("Initial Load of App", () => {
   });
 
   test("👀 Checked that the URLQuery title is rendered in the container.", async () => {
-    setSearchParams("batman", TypesMovie.FAVS);
+    const Search = SearchMother.create({ title: "batman", type: TypesMovie.FAVS, page: 1 });
+    setSearchParams({ title: Search.title, type: Search.type });
 
     await act(async () => {
       render(
@@ -59,7 +61,8 @@ describe("Initial Load of App", () => {
   });
 
   test("⚡ Checked that the Numbers of calls are optimal with type series", async () => {
-    setSearchParams("batman", TypesMovie.SERIES);
+    const Search = SearchMother.create({ title: "batman", type: TypesMovie.SERIES, page: 1 });
+    setSearchParams({ title: Search.title, type: Search.type });
 
     await act(async () => {
       render(
@@ -73,9 +76,9 @@ describe("Initial Load of App", () => {
 
     await waitFor(() => {
       expect(repositoryMoviesOMDB.getMovies).toHaveBeenCalledWith({
-        title: "batman",
-        type: TypesMovie.SERIES,
-        page: 1,
+        title: Search.title,
+        type: Search.type,
+        page: Search.page,
       });
     });
 
@@ -89,7 +92,8 @@ describe("Initial Load of App", () => {
   });
 
   test("⚡ Checked that the Numbers of calls are optimal with type all", async () => {
-    setSearchParams("batman", TypesMovie.ALL);
+    const Search = SearchMother.create({ title: "batman", type: TypesMovie.ALL, page: 1 });
+    setSearchParams({ title: Search.title, type: Search.type });
 
     await act(async () => {
       render(
@@ -103,9 +107,9 @@ describe("Initial Load of App", () => {
 
     await waitFor(() => {
       expect(repositoryMoviesOMDB.getMovies).toHaveBeenCalledWith({
-        title: "batman",
-        type: TypesMovie.ALL,
-        page: 1,
+        title: Search.title,
+        type: Search.type,
+        page: Search.page,
       });
     });
 
@@ -119,7 +123,8 @@ describe("Initial Load of App", () => {
   });
 
   test("🎨 Checked all the movies are rendered with type all", async () => {
-    setSearchParams("batman", TypesMovie.ALL);
+    const Search = SearchMother.create({ title: "batman", type: TypesMovie.ALL, page: 1 });
+    setSearchParams({ title: Search.title, type: Search.type });
 
     await act(async () => {
       render(
@@ -142,7 +147,8 @@ describe("Initial Load of App", () => {
   });
 
   test("🎨 Checked only the movies with type movies are rendered", async () => {
-    setSearchParams("batman", TypesMovie.MOVIE);
+    const Search = SearchMother.create({ title: "batman", type: TypesMovie.MOVIE, page: 1 });
+    setSearchParams({ title: Search.title, type: Search.type });
 
     await act(async () => {
       render(

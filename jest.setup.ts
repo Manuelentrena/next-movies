@@ -32,7 +32,7 @@ jest.mock("next/navigation", () => {
 });
 
 // Exportar funciones para manipular los valores en los tests
-export const setSearchParams = (newTitle: string, newType: TypesMovie) => {
-  title = newTitle;
-  type = newType;
+export const setSearchParams = ({ title, type }: { title: string; type: TypesMovie }) => {
+  title = title;
+  type = type;
 };

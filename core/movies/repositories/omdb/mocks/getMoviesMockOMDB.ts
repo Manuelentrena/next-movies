@@ -1,5 +1,5 @@
-import { Search } from "@/core/movies/domain/contract/MovieRepository";
 import { MovieList, TypesMovie } from "@/core/movies/domain/Movie";
+import { Search } from "@/core/movies/domain/Search";
 import { adapterMoviesListOMDB } from "@/core/movies/repositories/omdb/adapters/omdb.adapter";
 
 const movie1 = {

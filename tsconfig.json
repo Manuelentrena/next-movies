@@ -26,7 +26,8 @@
       "@/utils/*": ["utils/*"],
       "@/store/*": ["store/*"],
       "@/hooks/*": ["hooks/*"],
-      "@/public/*": ["public/*"]
+      "@/public/*": ["public/*"],
+      "@/__tests__/*": ["__tests__/*"]
     },
     "plugins": [
       {

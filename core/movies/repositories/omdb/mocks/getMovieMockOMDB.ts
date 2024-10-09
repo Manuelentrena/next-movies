@@ -1,5 +1,5 @@
 import { MovieDetail } from "@/core/movies/domain/Movie";
-import { SearchById } from "@/core/movies/domain/contract/MovieRepository";
+import { SearchById } from "@/core/movies/domain/Search";
 import { adapterMovieDetailOMDB } from "../adapters/omdb.adapter";
 
 export const getMovieMockOMDB = async ({ id }: SearchById): Promise<MovieDetail> => {

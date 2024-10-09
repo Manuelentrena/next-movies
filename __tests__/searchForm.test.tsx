@@ -17,6 +17,7 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event";
 import { setSearchParams } from "../jest.setup";
 import { mockPointerEvent } from "./__mocks__/pointerEventMock";
+import { SearchMother } from "./core/movies/domain/SearchMother";
 
 let repositoryMoviesOMDB: IMovieRepositoryOMDB;
 let serviceMoviesOMDB: IMovieService;
@@ -44,7 +45,8 @@ describe("searchForm", () => {
   });
 
   test("❌ Checked message error in searchForm.", async () => {
-    setSearchParams("batman", TypesMovie.ALL);
+    const Search = SearchMother.create({ title: "batman", type: TypesMovie.ALL, page: 1 });
+    setSearchParams({ title: Search.title, type: Search.type });
 
     await act(async () => {
       render(
@@ -76,7 +78,8 @@ describe("searchForm", () => {
   });
 
   test("✨ Checked not message error in searchForm with Favs.", async () => {
-    setSearchParams("batman", TypesMovie.FAVS);
+    const Search = SearchMother.create({ title: "batman", type: TypesMovie.FAVS, page: 1 });
+    setSearchParams({ title: Search.title, type: Search.type });
 
     await act(async () => {
       render(
@@ -110,7 +113,8 @@ describe("searchForm", () => {
   });
 
   test("🦇 Checked only 'The Batman' and  'Batman: The Animated Series' is rendered", async () => {
-    setSearchParams("batman", TypesMovie.ALL);
+    const Search = SearchMother.create({ title: "batman", type: TypesMovie.ALL, page: 1 });
+    setSearchParams({ title: Search.title, type: Search.type });
 
     await act(async () => {
       render(
@@ -151,7 +155,8 @@ describe("searchForm", () => {
 
   test("🦇 Checked only 'The Batman' is rendered", async () => {
     const restorePointerEvent = mockPointerEvent();
-    setSearchParams("batman", TypesMovie.ALL);
+    const Search = SearchMother.create({ title: "batman", type: TypesMovie.ALL, page: 1 });
+    setSearchParams({ title: Search.title, type: Search.type });
 
     await act(async () => {
       render(
