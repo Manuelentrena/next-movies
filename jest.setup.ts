@@ -13,15 +13,15 @@ global.IntersectionObserver = jest.fn(() => ({
   thresholds: [],
 }));
 
-let title = "batman";
-let type = "all";
+let titleFinal = "batman";
+let typeFinal = "all";
 
 jest.mock("next/navigation", () => {
   return {
     useSearchParams: () => ({
       get: (key: string) => {
-        if (key === "title") return title;
-        if (key === "type") return type;
+        if (key === "title") return titleFinal;
+        if (key === "type") return typeFinal;
         return null;
       },
     }),
@@ -33,6 +33,6 @@ jest.mock("next/navigation", () => {
 
 // Exportar funciones para manipular los valores en los tests
 export const setSearchParams = ({ title, type }: { title: string; type: TypesMovie }) => {
-  title = title;
-  type = type;
+  titleFinal = title;
+  typeFinal = type;
 };
