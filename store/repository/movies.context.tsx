@@ -1,4 +1,4 @@
-import { MOVIE_BY_DEFAULT, PAGE_BY_DEFAULT, TYPE_BY_DEFAULT } from "@/config/initial";
+import { MOVIE_BY_DEFAULT, PAGE_BY_DEFAULT } from "@/config/initial";
 import { FavsRepository } from "@/core/movies/domain/contract/FavsRepository";
 import { MovieRepository } from "@/core/movies/domain/contract/MovieRepository";
 import { Movie, MovieDetail, TypesMovie } from "@/core/movies/domain/Movie";
@@ -26,9 +26,8 @@ export const ServiceContextProvider = ({
   const [isInitialLoad, setIsInitialLoad] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
-
-  const title = searchParams.get("title") ?? MOVIE_BY_DEFAULT;
-  const type = (searchParams.get("type") as TypesMovie) ?? TYPE_BY_DEFAULT;
+  const title = (searchParams as URLSearchParams | null)?.get("title") ?? MOVIE_BY_DEFAULT;
+  const type = ((searchParams as URLSearchParams | null)?.get("type") as TypesMovie) ?? TypesMovie.ALL;
 
   useEffect(() => {
     const initLoading = async () => {
