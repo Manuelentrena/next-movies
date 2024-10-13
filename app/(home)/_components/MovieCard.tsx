@@ -50,6 +50,7 @@ const MovieCard: React.FC<MovieCardProps> = memo(
 
     return (
       <div
+        data-testid="movie-card"
         onMouseEnter={() => setHovered(index)}
         onMouseLeave={() => setHovered(null)}
         onClick={() => handleMovieDetail(Id)}
@@ -95,7 +96,7 @@ const MovieCard: React.FC<MovieCardProps> = memo(
                 {Title} ({Year})
               </span>
               <span className="flex">
-                <Badge variant="outline" className="mt-2 bg-primary text-white">
+                <Badge variant="outline" className="mt-2 bg-primary text-white" data-testid={`badge-movie-${Id}`}>
                   {Type}
                 </Badge>
               </span>
