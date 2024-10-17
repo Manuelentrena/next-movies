@@ -1,5 +1,5 @@
-import { Search, SearchById } from "@/core/movies/domain/contract/MovieRepository";
 import { MovieDetail, MovieList } from "@/core/movies/domain/Movie";
+import { Search, SearchById } from "@/core/movies/domain/Search";
 
 export interface MovieOMBD {
   Title: string;
@@ -8,12 +8,25 @@ export interface MovieOMBD {
   Type: string;
   Poster: string | null;
 }
+export const emptyMovieOMBD: MovieOMBD = {
+  Title: "",
+  Year: "",
+  imdbID: "",
+  Type: "",
+  Poster: null,
+};
 
 export interface MoviesListOMBD {
   Search: MovieOMBD[];
   totalResults: string;
   Response: string;
 }
+
+export const emptyMoviesListOMBD: MoviesListOMBD = {
+  Search: [],
+  totalResults: "0",
+  Response: "False",
+};
 
 export interface RatingOMBD {
   Source: string;
