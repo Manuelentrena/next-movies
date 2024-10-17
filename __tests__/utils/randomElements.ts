@@ -1,6 +1,6 @@
-import { Movie, MovieDetail, MovieList, TypesMovie } from "@/core/movies/domain/Movie";
+import { TypesMovie } from "@/core/movies/domain/Movie";
 import { faker } from "@faker-js/faker";
-import { MovieMother } from "../core/movies/domain/MovieMother";
+import { MovieMother } from "../../core/movies/repositories/omdb/mocks/objectsMother/MovieMother";
 
 export enum MovieRating {
   G = "G",
@@ -37,24 +37,11 @@ export function getRandomGenres() {
   return selectedGenres.join(", ");
 }
 
-export function moviesResponse({ movies }: { movies: Movie[] }): Promise<MovieList> {
-  return new Promise((resolve) => {
-    resolve({
-      Movies: movies,
-      Total: movies.length.toString(),
-    });
-  });
-}
-export function moviesDetailResponse(movieDetail: MovieDetail): Promise<MovieDetail> {
-  return new Promise((resolve) => {
-    resolve(movieDetail);
-  });
-}
-
-export function createMovies({ length, title, type }: { length: number; title: string; type: TypesMovie }) {
+export function createMovies({ length, title, type }: { length: number; title: string; type: TypesMovie | null }) {
+  const defaultType = type ?? TypesMovie.ALL;
   return Array.from({ length: length }, () =>
     MovieMother.create({
-      Type: type,
+      Type: defaultType,
       Title: generateTitleWith(title),
     }),
   );
