@@ -92,7 +92,10 @@ const MovieCard: React.FC<MovieCardProps> = memo(
         >
           <div>
             <div className="flex flex-col">
-              <span className="bg-gradient-to-b from-neutral-50 to-neutral-200 bg-clip-text text-xl font-extrabold text-transparent sm:text-lg md:text-2xl">
+              <span
+                data-testid={`title-movie-${Id}`}
+                className="bg-gradient-to-b from-neutral-50 to-neutral-200 bg-clip-text text-xl font-extrabold text-transparent sm:text-lg md:text-2xl"
+              >
                 {Title} ({Year})
               </span>
               <span className="flex">
