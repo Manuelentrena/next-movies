@@ -1,4 +1,3 @@
-import { API_KEY, BASE_URL } from "@/config/env";
 import { TypesMovie } from "@/core/movies/domain/Movie";
 import { MovieDetailMother } from "@/core/movies/repositories/omdb/mocks/objectsMother/MovieMother";
 import { emptyMovieOMBD, MovieDetailOMBD, MovieOMBD } from "@/core/movies/repositories/omdb/types/omdb.types";
@@ -8,7 +7,7 @@ import { createMovies } from "../utils/randomElements";
 export let Movies: MovieOMBD[] | MovieDetailOMBD[] = [emptyMovieOMBD];
 
 export const handlers = [
-  http.get(`${BASE_URL}${API_KEY}}`, ({ request }) => {
+  http.get(`https://www.omdbapi.com`, ({ request }) => {
     const url = new URL(request.url);
 
     const page = url.searchParams.get("page") || null;
