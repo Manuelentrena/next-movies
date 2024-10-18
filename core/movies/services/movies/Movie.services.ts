@@ -1,4 +1,5 @@
-import { MovieRepository, Search, SearchById } from "@/core/movies/domain/contract/MovieRepository";
+import { MovieRepository } from "@/core/movies/domain/contract/MovieRepository";
+import { Search, SearchById } from "@/core/movies/domain/Search";
 
 export const createServiceMovies = (repository: MovieRepository) => {
   return {
