@@ -1,7 +1,8 @@
 import { API_KEY, BASE_URL } from "@/config/env";
-import { MovieRepository, Search, SearchById } from "@/core/movies/domain/contract/MovieRepository";
+import { MovieRepository } from "@/core/movies/domain/contract/MovieRepository";
 import { NotFoundMovieError } from "@/core/movies/domain/errors/not_found_movie.error";
 import { PaginationMovieError } from "@/core/movies/domain/errors/pagination_movie.error";
+import { Search, SearchById } from "@/core/movies/domain/Search";
 import { adapterMovieDetailOMDB, adapterMoviesListOMDB } from "@/core/movies/repositories/omdb/adapters/omdb.adapter";
 import { MovieDetailOMBD, MoviesListOMBD } from "@/core/movies/repositories/omdb/types/omdb.types";
 
