@@ -1,6 +1,6 @@
-import { Search } from "@/core/movies/domain/contract/MovieRepository";
 import { handleMoviesError } from "@/core/movies/domain/errors/handleError";
 import { MovieDetail } from "@/core/movies/domain/Movie";
+import { Search } from "@/core/movies/domain/Search";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setMovieDetail, setMovies, setNextMovies, setTotal, toggleFavMovie } from "@/store/movies/movies.slice";
 import { ServiceContext } from "@/store/repository/movies.context";

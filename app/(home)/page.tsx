@@ -37,8 +37,8 @@ export default function HomePage() {
 
   return (
     <>
-      <Breadcrumb title={searchState.title} />
       <SearchForm getMovies={getMovies} getFavs={getFavs} setStopObserver={setStopObserver} />
+      <Breadcrumb title={searchState.title} />
       <MoviesContainer movies={moviesState.movies} isNextPageLoad={isNextPageLoad} isInitialLoad={isInitialLoad} />
       <ScrollToTopButton />
       <Counter total={moviesState.total} state={moviesState.movies.length} />
